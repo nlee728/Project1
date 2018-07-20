@@ -8,8 +8,7 @@ Ideas:
 3. Madlib gifs
 4. Movie remakes using gifs
 
-
-Project Title:
+Project Title: 
 
 Team Members: 
 Charlie Sowers
@@ -21,7 +20,6 @@ Sundaresh Sankaran
 Project Description:
 An app that allows a group of people to access a page where they can vote on which movie to go see. They will vote suggested movies from the group up or down and make a final selection when the majority of the group agrees. They can then vote on the showtimes and locations for the movie they have chosen. 
 
-
 Final Product Sketch:
 
 
@@ -30,7 +28,7 @@ Open Agora
 Fandango  
 
 Task Breakdown:
-HTML/CSS
-Javascript on-click functionality
-Firebase database setup
-API integration
+1. HTML/CSS and UX/UI - Nutishia
+2. Javascript on-click functionality - Sundaresh
+3. Firebase database setup - John
+4. API integration - Charlie
