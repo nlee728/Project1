@@ -8,7 +8,7 @@ Ideas:
 3. Madlib gifs
 4. Movie remakes using gifs
 
-Project Title: 
+Project Title: Pick a Flick!
 
 Team Members: 
 Charlie Sowers
