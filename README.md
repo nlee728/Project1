@@ -26,6 +26,11 @@ Final Product Sketch:
 
 
 APIs To Be Used:
-
+Open Agora  
+Fandango  
 
 Task Breakdown:
+HTML/CSS
+Javascript on-click functionality
+Firebase database setup
+API integration
