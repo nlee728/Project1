@@ -17,9 +17,7 @@
      <!-- jQuery, Firebase -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
-    <script src="../Project1/javascript/app.js"></script>
-    <script src="../Project1/javascript/main.js"></script>
-    
+        
     
   </head>
   <body>
@@ -48,10 +46,10 @@
               <!-- Entry Form -->
               <form>
                 <div class="form-group row">
-                  <label for="group-input col-md-2">Group:  </label>
+                  <label for="group-input col-md-2">Group  :</label>
                   <input class="form-control col-md-4" id="group-input" placeholder="Enter your group name" type="text">
                   <div class="col-md-1"></div>
-                  <label for="zipcode-input col-md-2">Zipcode:  </label>
+                  <label for="zipcode-input col-md-2">Zipcode  :</label>
                   <input class="form-control col-md-4" id="zipcode-input" placeholder="27713" type="text">
                 </div>
                 <button class="btn btn-primary float-right" id="submit-btn">Submit</button>
@@ -78,7 +76,7 @@
                     <th scope="col">Rating</th>
                     <!-- Link to trailer video -->
                     <th scope="col">Trailer</th>
-                    <th scope="col">Vote</i></th>
+                    <th scope="col">Rank</i></th>
                   </tr>
                 </thead>
 
@@ -90,7 +88,7 @@
                     <th scope="col">124min</th>
                     <th scope="col">PG</th>
                     <th scope="col">http://www.jaws25.com/</th>
-                    <th scope="col"><i class="fas fa-thumbs-up"></i>  <i class="fas fa-thumbs-down"></i></th>
+                    <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>
                   </tr>
 
                   <tr>
@@ -99,11 +97,13 @@
                     <th scope="col">143min</th>
                     <th scope="col">PG-13</th>
                     <th scope="col">http://marvel.com/avengers_movie</th> 
-                    <th scope="col"><i class="fas fa-thumbs-up"></i>  <i class="fas fa-thumbs-down"></i></th>
+                    <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>
                   </tr>
-
+                  
                   <!-- Movie info from APIs will go here -->
+                  <tr><button class="btn btn-primary" id="vote-btn">Vote!</button></tr></tr>
                 </tbody>
+                
 
               </table>
             </div>
@@ -112,7 +112,9 @@
       </div>
     </div>
 
-    
+    <!-- Javascript -->
+    <script src="../Project1/javascript/app.js"></script>
+    <script src="../Project1/javascript/main.js"></script>
 
   </body>
 </html>
