@@ -16,15 +16,15 @@ database = firebase.database();
 var moviesRef = database.ref('/movies');
 var usersRef = database.ref('/users');
 
-var movieChoice = $('input').val().trim();
-var userName = $('input').val().trim();
+var zipcode = $('#zipcode-input').val().trim();
+var group = $('#group-input').val().trim();
 
-moviesRef.set({movies: movieChoice});
-usersRef.set({users: userName});
+//moviesRef.set({movies: movieChoice});
+//usersRef.set({users: userName});
 
 var startDate = '2018-07-21';
 var zipcode = '27560';
-var api_key = seehjrjvumeesg8pe3e87j9j;
+var api_key = 'seehjrjvumeesg8pe3e87j9j';
 var url = 'http://data.tmsapi.com/v1.1/movies/showings?' +
           'startDate=' + startDate +
           '&zip=' + zipcode +
