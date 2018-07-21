@@ -43,3 +43,7 @@ p {
 .fa-thumbs-down {
     color: gray;
 }
+
+label {
+    margin-right: 10px;
+}

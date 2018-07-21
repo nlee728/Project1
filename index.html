@@ -17,7 +17,11 @@
      <!-- jQuery, Firebase -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+<<<<<<< HEAD
     
+=======
+        
+>>>>>>> 980bfb78782bf81396ca150c3d89341e087c0343
     
   </head>
   <body>
@@ -38,19 +42,34 @@
       </div>
   
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
+          <!-- Login Card  -->
+          <div class="card mb-4 p-4">
+            <div class="card-body">
+              <h3 class="card-title">Login</h3>
+              <!-- Find Group Form -->
+              <form>
+                <div class="form-group row">
+                  <label for="group-input">Find Your Group</label>
+                  <input class="form-control" id="group-input" placeholder="Enter your group name" type="text">
+                </div>
+                <button class="btn btn-primary float-right" id="login-btn">Login</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
           <!-- Get Started Card  -->
           <div class="card mb-4 p-4">
             <div class="card-body">
-              <h3 class="card-title">Get Started</h3>
+              <h3 class="card-title">Create A Group</h3>
               <!-- Entry Form -->
               <form>
                 <div class="form-group row">
-                  <label for="group-input col-md-2">Group:  </label>
-                  <input class="form-control col-md-4" id="group-input" placeholder="Enter your group name" type="text">
-                  <div class="col-md-1"></div>
-                  <label for="zipcode-input col-md-2">Zipcode:  </label>
-                  <input class="form-control col-md-4" id="zipcode-input" placeholder="27713" type="text">
+                  <label for="group-input">Create A Group</label>
+                  <input class="form-control" id="group-input" placeholder="Enter your group name" type="text">
+                  <label for="zipcode-input">Zipcode</label>
+                  <input class="form-control" id="zipcode-input" placeholder="27713" type="text">
                 </div>
                 <button class="btn btn-primary float-right" id="submit-btn">Submit</button>
               </form>
@@ -76,7 +95,7 @@
                     <th scope="col">Rating</th>
                     <!-- Link to trailer video -->
                     <th scope="col">Trailer</th>
-                    <th scope="col">Vote</i></th>
+                    <th scope="col">Rank</i></th>
                   </tr>
                 </thead>
 
@@ -88,7 +107,7 @@
                     <th scope="col">124min</th>
                     <th scope="col">PG</th>
                     <th scope="col">http://www.jaws25.com/</th>
-                    <th scope="col"><i class="fas fa-thumbs-up"></i>  <i class="fas fa-thumbs-down"></i></th>
+                    <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>
                   </tr>
 
                   <tr>
@@ -97,22 +116,31 @@
                     <th scope="col">143min</th>
                     <th scope="col">PG-13</th>
                     <th scope="col">http://marvel.com/avengers_movie</th> 
-                    <th scope="col"><i class="fas fa-thumbs-up"></i>  <i class="fas fa-thumbs-down"></i></th>
+                    <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>
                   </tr>
-
+                  
                   <!-- Movie info from APIs will go here -->
+                  
                 </tbody>
+                
 
               </table>
+              <button class="btn btn-primary" id="vote-btn">Vote!</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+<<<<<<< HEAD
     <!--script src="../Project1/javascript/app.js"></script-->
     <script src="../Project1/javascript/main.js"></script>
     
+=======
+    <!-- Javascript -->
+    <script src="../Project1/javascript/app.js"></script>
+    <script src="../Project1/javascript/main.js"></script>
+>>>>>>> 980bfb78782bf81396ca150c3d89341e087c0343
 
   </body>
 </html> 
