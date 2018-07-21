@@ -1,0 +1,2 @@
+Changed scripts reference - from /assets/javascript/app.js to /javascript/main.js
+
