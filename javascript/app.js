@@ -16,8 +16,8 @@ database = firebase.database();
 var moviesRef = database.ref('/movies');
 var usersRef = database.ref('/users');
 
-var zipcode = $('zipcode-input').val().trim();
-var group = $('group-input').val().trim();
+var zipcode = $('#zipcode-input').val().trim();
+var group = $('#group-input').val().trim();
 
 //moviesRef.set({movies: movieChoice});
 //usersRef.set({users: userName});
