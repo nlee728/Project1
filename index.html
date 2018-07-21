@@ -1,20 +1,90 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Title</title>
-    <!-- Required meta tags -->
+    <title>Pick a Flick</title>
+    <!-- Meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Black+Ops+One|Montserrat+Subrayada" rel="stylesheet">
+
   </head>
   <body>
-      
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+     <!--  -->
+  <div class="container">
+
+      <!-- Logo -->
+      <div>
+          <h1 class="logo">Pick A Flick</h1>  
+        <div>
+          <p>You're probably here because you and your friends can't decide on a movie.</p>
+            <hr>
+              <p>Don't worry. We've got your back! Just type a movie to get started.</p>
+            <hr>
+          <hr>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Add Movie  -->
+          <div class="card mb-4 p-4">
+            <div class="card-body">
+              <h3 class="card-title">Add Movie</h3>
+              <!-- Entry Form -->
+              <form>
+                <div class="form-group row">
+                  <label for="movie-name-input">Movie Name</label>
+                  <input class="form-control" id="movie-name-input" placeholder="Some Flick" type="text">
+                </div>
+                <button class="btn btn-primary float-right" id="add-movie-btn">Pick!</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row">
+  
+        <div class="col-md-12">
+  
+          <!-- Current List of Suggested Movies-->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h3 class="card-title">Suggested Movies</h3>
+              <table class="table table-sm table-hover" id='movie-table'>
+                <thead>
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col">Run Time</th>
+                    <th scope="col">Rating</th>
+                    <!-- Link to trailer video -->
+                    <th scope="col">Trailer</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <!-- Movie info from APIs will go here -->
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <!-- JavaScript, Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <script src="assets/javascript/app.js"></script>
   </body>
 </html>
