@@ -14,6 +14,11 @@
     <link href="https://fonts.googleapis.com/css?family=Black+Ops+One|Montserrat+Subrayada" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
 
+     <!-- jQuery, Firebase -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    <script src="assets/javascript/app.js"></script>
+    
   </head>
   <body>
 
@@ -41,12 +46,10 @@
               <!-- Entry Form -->
               <form>
                 <div class="form-group row">
-                  <label for="group-input">Group</label>
-                  <input class="form-control" id="group-input" placeholder="Enter your group name" type="text">
-                </div>
-                <div class="form-group row">
-                  <label for="zipcode-input">Zipcode</label>
-                  <input class="form-control" id="zipcode-input" placeholder="27713" type="text">
+                  <label for="group-input col-md-2">Group:  </label>
+                  <input class="form-control col-md-4" id="group-input" placeholder="Enter your group name" type="text">
+                  <label for="zipcode-input col-md-2">Zipcode:  </label>
+                  <input class="form-control col-md-4" id="zipcode-input" placeholder="27713" type="text">
                 </div>
                 <button class="btn btn-primary float-right" id="submit-btn">Submit</button>
               </form>
@@ -107,9 +110,6 @@
     </div>
 
     
-    <!-- JavaScript, Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
-    <script src="./javascript/main.js"></script>
+
   </body>
 </html>
