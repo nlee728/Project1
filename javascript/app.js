@@ -24,7 +24,7 @@ var group = $('#group-input').val().trim();
 
 var startDate = '2018-07-21';
 var zipcode = '27560';
-var api_key = seehjrjvumeesg8pe3e87j9j;
+var api_key = 'seehjrjvumeesg8pe3e87j9j';
 var url = 'http://data.tmsapi.com/v1.1/movies/showings?' +
           'startDate=' + startDate +
           '&zip=' + zipcode +
