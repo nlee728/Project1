@@ -84,7 +84,7 @@ function groupCheck(gc,group){
 // Note to John / team - please let me know if this firebase table name needs to change
 
 database.ref("GroupsList").on("value", function(snapshot) {
-    
+    console.log(snapshot.val());
     groups = []; 
 
     for (key of Object.entries(snapshot.val())){
@@ -119,7 +119,15 @@ $('#submit-btn').on("click",function(event){
         
         if( groups.indexOf(group) === -1) {
             groupArray={"groupName":group,"zipcode":zipcode};
-            database.ref("GroupsList").push(groupArray);
+
+            // Thing to do : get movies for this zipcode - clearInterval
+            // add that to th egroup array
+
+            groupArray["moviename"] = "Godzilla";
+            groupArray["showtime"] = moment().format("DD/MMM/YYYY HH:mm");
+            groupArray["Theatre"] = "AMC";
+            var ref = database.ref("GroupsList/" + group);
+            ref.set(groupArray);
             writeLogin(group);
             $("#group-card").append($("<p>",{id:"already-there-note",text:"Group added - login <---"}));
             $("#group-input").val(group);
