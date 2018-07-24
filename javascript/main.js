@@ -54,8 +54,8 @@ function groupCheck(gc,group){
         $("#login-conf1").empty();
         $("#login-conf2").empty();
         
-        $("#find-group").append($("<p>",{id:"login-conf1",text:"Group found."}));
-        $("#find-group").append($("<p>",{id:"login-conf2",text:"You are now logged in!"}));
+        $("#login-card").append($("<p>",{id:"login-conf1",text:"Group found."}));
+        $("#login-card").append($("<p>",{id:"login-conf2",text:"You are now logged in!"}));
         $("#group-input").val("Logged In");
         $("#login-btn").text("Logged In");
         $("#login-btn").css({"background-color":"green"});
@@ -64,7 +64,7 @@ function groupCheck(gc,group){
     } else {
         $("#login-conf1").empty();
         $("#login-conf2").empty();
-        $("#find-group").append($("<p>",{id:"login-conf1",text:"Group does not exist "}))
+        $("#login-card").append($("<p>",{id:"login-conf1",text:"Group does not exist "}))
                         .append($("<p>",{id:"login-conf2",text:"Click Add to create the same."}));
         $("#add-group-input").val(group);
         $("#login-btn").text("--->");
@@ -121,12 +121,12 @@ $('#submit-btn').on("click",function(event){
             groupArray={"groupName":group,"zipcode":zipcode};
             database.ref("GroupsList").push(groupArray);
             writeLogin(group);
-            $("#add-group").append($("<p>",{id:"already-there-note",text:"Group added - login <---"}));
+            $("#group-card").append($("<p>",{id:"already-there-note",text:"Group added - login <---"}));
             $("#group-input").val(group);
             $("#submit-button").text("Add another Group ");
         } else {
             console.log("already there");
-            $("#add-group").append($("<p>",{id:"already-there-note",text:"Group already exists - no need to add"}));
+            $("#group-card").append($("<p>",{id:"already-there-note",text:"Group already exists - no need to add"}));
             $("#submit-button").text("Add another Group ");
         };
 
