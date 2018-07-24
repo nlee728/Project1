@@ -36,7 +36,3 @@ var url = 'http://data.tmsapi.com/v1.1/movies/showings?' +
           'startDate=' + startDate +
           '&zip=' + zipcode +
           '&api_key=' + api_key
-
-$.get(url).then(function(response) {
-    console.log(response);
-})
