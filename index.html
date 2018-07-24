@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+
     <title>Pick a Flick</title>
     <!-- Meta tags -->
     <meta charset="utf-8">
@@ -17,6 +18,10 @@
      <!-- jQuery, Firebase -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+
+    <!-- SS - adding Moment.js (using for logging the login (sorry, couldn't help that phrase)) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    
     
   </head>
   <body>
@@ -62,7 +67,7 @@
               <form>
                 <div class="form-group row">
                   <label for="group-input">Create A Group</label>
-                  <input class="form-control" id="group-input" placeholder="Enter your group name" type="text">
+                  <input class="form-control" id="add-group-input" placeholder="Enter your group name" type="text">
                   <label for="zipcode-input">Zipcode</label>
                   <input class="form-control" id="zipcode-input" placeholder="27713" type="text">
                 </div>
@@ -127,8 +132,21 @@
       </div>
     </div>
 
+
+
+
+
+    
+    <!-- Added an extra tab for testing purpose against firebase - should finally point to John's (app.js)  -->
+    <!-- Request - please comment / remove after making sure it works with John's app.js since that is the main movie related script  -->
+
+
+    <script src="../Project1/javascript/app2.js"></script>
+
+    
     <!-- Javascript -->
     <script src="../Project1/javascript/app.js"></script>
+    
     <script src="../Project1/javascript/main.js"></script>
 
   </body>
