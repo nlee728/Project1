@@ -122,10 +122,15 @@ $('#submit-btn').on("click",function(event){
 
             // Thing to do : get movies for this zipcode - clearInterval
             // add that to th egroup array
+            // comment placeholder for callMovieAPI
+
+
 
             groupArray["moviename"] = "Godzilla";
             groupArray["showtime"] = moment().format("DD/MMM/YYYY HH:mm");
             groupArray["Theatre"] = "AMC";
+
+            
             var ref = database.ref("GroupsList/" + group);
             ref.set(groupArray);
             writeLogin(group);
