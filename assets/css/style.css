@@ -47,3 +47,11 @@ p {
 label {
     margin-right: 10px;
 }
+
+table {
+    overflow: auto;
+}
+
+#results-btn {
+    background-color: lightgray;
+}
