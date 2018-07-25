@@ -36,22 +36,14 @@ p {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
-.fa-thumbs-up {
-    color: yellow;
-}
-
-.fa-thumbs-down {
-    color: gray;
-}
-
 label {
     margin-right: 10px;
 }
 
-table {
-    overflow: auto;
-}
-
 #results-btn {
     background-color: lightgray;
+}
+
+  .scrolltable {
+    overflow: auto;
 }
