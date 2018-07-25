@@ -84,7 +84,8 @@
         <div class="col-md-12">
           <!-- Current List of Suggested Movies-->
           <div class="card mb-4">
-            <div class="card-body">
+            <!-- Hi Nutishia = I am making a minor change - adding an id to the card body below -->
+            <div class="card-body" id = "vote-card">
               <h3 class="card-title">Suggested Movies</h3>
               <div = "scrolltable">
               <table class="table table-sm table-hover" id='movie-table'>
@@ -103,21 +104,22 @@
                 <tbody>
                   <!-- Pre-populated samples -->
                   <tr>
-                    <th scope="col">Jaws</th>
+                    <!-- For Nutishia ref: I am adding an id element to test my code -->
+                    <th scope="col" id="trmov0">Jaws</th>
                     <th scope="col">Thriller</th>
                     <th scope="col">124min</th>
                     <th scope="col">PG</th>
                     <th scope="col">http://www.jaws25.com/</th>
-                    <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="number"></th>
+                    <th scope="col"><input class="form-control trr" id="trrmov0" placeholder="1-5" type="number"></th>
                   </tr>
 
                   <tr>
-                    <th scope="col">The Avengers</th>
+                    <th scope="col" id = "trmov1">The Avengers</th>
                     <th scope="col">Action, Adventure</th>
                     <th scope="col">143min</th>
                     <th scope="col">PG-13</th>
                     <th scope="col">http://marvel.com/avengers_movie</th> 
-                    <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="number"></th>
+                    <th scope="col"><input class="form-control trr" id="trrmov1" placeholder="1-5" type="number"></th>
                   </tr>
                   
                   <!-- Movie info from APIs will go here -->
