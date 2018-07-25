@@ -44,6 +44,6 @@ label {
     background-color: lightgray;
 }
 
-  .scrolltable {
+#movie-table {
     overflow: auto;
 }

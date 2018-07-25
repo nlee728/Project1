@@ -26,11 +26,10 @@
   </head>
   <body>
 
-     <!--  -->
   <div class="container">
 
       <!-- Logo -->
-      <div id="header">
+      <div>
           <h1 class="logo">Pick A Flick</h1>  
         <div>
           <p>You're probably here because you and your friends can't decide on a movie.</p>
@@ -41,7 +40,7 @@
         </div>
       </div>
   
-      <div class="row ">
+      <div class="row">
         <div class="col-md-6">
           <!-- Login Card  -->
           <div class="card mb-4 p-4">
@@ -69,7 +68,7 @@
                   <label for="group-input">Create A Group</label>
                   <input class="form-control" id="add-group-input" placeholder="Enter your group name" type="text">
                   <label for="zipcode-input">Zipcode</label>
-                  <input class="form-control" id="zipcode-input" placeholder="27713" type="number">
+                  <input class="form-control" id="zipcode-input" placeholder="27713" type="text">
                   <label for="password-input">Group Leader Password</label>
                   <input class="form-control" id="password-input" placeholder="*******" type="text">
                 </div>
@@ -86,15 +85,14 @@
           <div class="card mb-4">
             <div class="card-body">
               <h3 class="card-title">Suggested Movies</h3>
-              <div = "scrolltable">
-              <table class="table table-sm table-hover" id='movie-table'>
+              <table class="table table-sm table-hover" id="movie-table">
                 <thead>
                   <tr>
                     <th scope="col">Title</th>
                     <th scope="col">Genre</th>
                     <th scope="col">Run Time</th>
                     <th scope="col">Rating</th>
-                    <!-- Link to trailer video by adding an href in the javascript-->
+                    <!-- Link to trailer video -->
                     <th scope="col">Trailer</th>
                     <th scope="col">Rank</i></th>
                   </tr>
@@ -108,7 +106,7 @@
                     <th scope="col">124min</th>
                     <th scope="col">PG</th>
                     <th scope="col">http://www.jaws25.com/</th>
-                    <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="number"></th>
+                    <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>
                   </tr>
 
                   <tr>
@@ -117,22 +115,17 @@
                     <th scope="col">143min</th>
                     <th scope="col">PG-13</th>
                     <th scope="col">http://marvel.com/avengers_movie</th> 
-                    <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="number"></th>
+                    <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>
                   </tr>
                   
                   <!-- Movie info from APIs will go here -->
                   
                 </tbody>
-              </table>
-            </div>
-              <button class="btn btn-primary" id="vote-btn">Vote!</button>
-              <hr>
-              <button class="btn btn-primary" id="results-btn">Get Voting Results!</button>
-            </div>
-            <div id="graph">
-              
-              <!-- Graph of the results will go here -->
+                
 
+              </table>
+              <button class="btn btn-primary" id="vote-btn">Vote!</button>
+              <button class="btn btn-primary" id="results-btn">Get Voting Results!</button>
             </div>
           </div>
         </div>
