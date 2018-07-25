@@ -58,4 +58,8 @@ function getMovieData(data) {
   for(let i = 0; i <= 5; i++) {
       fiveMovies.push(data[i].title);
   }
+  var groupName = ''
+  var groupsRef = database.ref('/groups/' + groupName);
+  groupsRef.set({movies: fiveMovies,
+                 zipcode});
 }
