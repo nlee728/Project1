@@ -199,10 +199,10 @@ $("#login-btn").on("click",function(event){
 
 $("#vote-btn").on("click", function(){
 
-    var Votes;
-    var VotesArray;
+    var Votes={Movie:"",Rank:""};
+    var VotesArray=[];
 
-
+    $("#not-vote-msg").remove();
 
 
 
@@ -211,16 +211,52 @@ $("#vote-btn").on("click", function(){
     // - the table elements (tr and the td) for movies and rank form-input will have a separate id - this will change based on the number of results the movies api returns
 
 
-    for (var i = 0 ; i < $('.form-control').length ; i ++) {
-        Votes["Movie"] = $("#trmov"+i).val();
+    for (var i = 0 ; i < $('.trr').length ; i ++) {
+        Votes["Movie"] = $("#trmov"+i).text();
         Votes["Rank"] = $("#trrmov"+i).val();
         VotesArray.push({"Movie":Votes["Movie"],"Rank":Votes["Rank"]});
+     
 
 
 
     };
 
+    // for checking 
+    console.log("The resulting array");
+    console.log(VotesArray);
+
     // Charlie's validation function
+
+
+    function testVote(vote){
+        var testArray = [];
+        for(var i = 0; i<vote.length; i++){
+            rank = parseInt(vote[i].Rank);
+            console.log(rank);
+            if(rank <= vote.length && rank>0){
+                testArray[rank-1] = parseInt(rank);
+            }
+            console.log(testArray);
+        }
+        for(var i = 0; i<vote.length; i++){
+            if(testArray[i] != i+1){
+                return false;
+            }
+        }
+        return true;
+     };
+
+
+    vc = testVote(VotesArray);
+    console.log(vc);
+
+    if (vc === false) {
+
+        $("vote-card").append($("<p>",{id:"not-vote-msg",text:"Voting not in order - please check"}));
+
+
+    };
+
 
 });
 
