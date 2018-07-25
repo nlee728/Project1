@@ -44,6 +44,6 @@ label {
     background-color: lightgray;
 }
 
-#movie-table {
-    overflow: auto;
+#card-body { 
+    overflow-x: scroll !important;
 }
