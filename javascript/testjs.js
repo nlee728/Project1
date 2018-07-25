@@ -13,7 +13,7 @@ var database = firebase.database();
 //moviesRef.set({movies: movieChoice});
 //usersRef.set({users: userName});
 
-var startDate = '2018-07-24';
+var startDate = '2018-07-25';
 var zipcode = '27615';
 var api_key = 'seehjrjvumeesg8pe3e87j9j';
 var url = 'http://data.tmsapi.com/v1.1/movies/showings?' +
@@ -24,10 +24,8 @@ var url = 'http://data.tmsapi.com/v1.1/movies/showings?' +
 console.log(url)
 
 $.get(url).then(function(response) {
-  console.log(response);
-  var data = response;
-  generateMovies(data);
-});
+  getMovieData(response);
+}); 
 
 $("#submit-btn").on("click",function(e) {   
   e.preventDefault();
@@ -41,24 +39,35 @@ $("#submit-btn").on("click",function(e) {
                  zipcode});
 });
 
+
 function generateMovies(data) {
-  for(let movie of data) {
+  for(let i = 0; i <= 5; i++) {
+      var runTime = data[i].runTime;
+      runTime = runTime.slice(3, runTime.length);
       var tr =  $('<tr>');
-      var th = $('<th>');
       $('#movie-table').append(tr);
-      tr.append(th).text(movie.title);
-      tr.append(th).text(movie.topCase);
-      tr.append(th).text(movie.officialUrl);
-      tr.append(th).text(movie.showtimes);
+      tr.append(`<th>${data[i].title}</th>`);
+      tr.append(`<th>${data[i].genres[0]}, ${data[i].genres[1]}</th>`);
+      tr.append(`<th>${runTime}</th>`);
+      tr.append(`<th>${data[i].ratings[0].code}</th>`);
+      tr.append(`<th><a href="${data[i].officialUrl}" target="_blank">Trailer</a></th>`);
+      tr.append(`<th><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>`);
   }
 }
-
 function getMovieData(data) {
   var fiveMovies = []
+  console.log(fiveMovies);
   for(let i = 0; i <= 5; i++) {
-      fiveMovies.push(data[i].title);
-  }
-  var groupName = ''
+      var runTime = data[i].runTime.slice(3, data[i].runTime.length);
+      fiveMovies.push({title: data[i].title, 
+                      genre: data[i].genres[0],
+                      runTime: runTime,
+                      rating: data[i].ratings[0].code,
+                      trailer: data[i].officialUrl
+                      });
+  }                    
+  var groupName = 'TestGroup'
+  var zipcode = '27615'
   var groupsRef = database.ref('/groups/' + groupName);
   groupsRef.set({movies: fiveMovies,
                  zipcode});
