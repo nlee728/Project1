@@ -47,3 +47,8 @@ label {
 #card-body { 
     overflow-x: scroll !important;
 }
+
+#already-there-note, #login-conf1, #login-conf2 {
+    font-size: 15px;
+    margin-right: 10px;
+}
