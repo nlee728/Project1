@@ -12,16 +12,39 @@ var database = firebase.database();
 //database Ref for an individual group's movies folder in firebase
 var singleGroupRef = database.ref('/groups/TestGroup/movies');
 
+<<<<<<< HEAD
+//moviesRef.set({movies: movieChoice});
+//usersRef.set({users: userName});
+
+
+// SS - wrapping this up in a callMovieAPI function that will be called once the group and zipcode is created.
+
+function callMovieAPI(zipcode){
+
+  var startDate = moment().format("YYYY-MM-DD");
+  var api_key = 'seehjrjvumeesg8pe3e87j9j';
+  var url = 'http://data.tmsapi.com/v1.1/movies/showings?' +
+=======
 var startDate = '2018-07-26';
 var zipcode = '27615';
 var api_key = 'seehjrjvumeesg8pe3e87j9j';
 var url = 'http://data.tmsapi.com/v1.1/movies/showings?' +
+>>>>>>> ec759173e6994cd30bf59e472be2acaf33a14151
         'startDate=' + startDate +
         '&zip=' + zipcode +
-        '&api_key=' + api_key
+        '&api_key=' + api_key;
 
-console.log(url)
+   
+  $.get(url).then(function(response) {
+    console.log(response);
+    var data = response;
+    generateMovies(data);
+  });
 
+};
+
+<<<<<<< HEAD
+=======
 //push api data to firebase, commented out to reduce api calls on page load. just un-comment to test.
 /*           $.get(url).then(function(response) {
             getMovieData(response);
@@ -32,6 +55,7 @@ singleGroupRef.on('child_added', function(snapshot) {
   console.log(snapshot.val())
   generateMovies(snapshot.val());
 });
+>>>>>>> ec759173e6994cd30bf59e472be2acaf33a14151
 
 $("#submit-btn").on("click",function(e) {   
   e.preventDefault();
@@ -45,6 +69,21 @@ $("#submit-btn").on("click",function(e) {
                  zipcode});
 });
 
+<<<<<<< HEAD
+// SS - suggestion - moving this to main . js for now - to keep all functions together
+
+// function generateMovies(data) {
+//   for(let movie of data) {
+//       var tr =  $('<tr>');
+//       var th = $('<th>');
+//       $('#movie-table').append(tr);
+//       tr.append(th).text(movie.title);
+//       tr.append(th).text(movie.topCase);
+//       tr.append(th).text(movie.officialUrl);
+//       tr.append(th).text(movie.showtimes);
+//   }
+// }
+=======
 
 
 
@@ -58,6 +97,7 @@ function generateMovies(data) {
       tr.append(`<th><a href="${data.trailer}" target="_blank">Trailer</a></th>`);
       tr.append(`<th><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>`);
 }
+>>>>>>> ec759173e6994cd30bf59e472be2acaf33a14151
 
 function getMovieData(data) {
   var fiveMovies = []
