@@ -89,11 +89,9 @@
                 <thead>
                   <tr>
                     <th scope="col">Title</th>
-                    <th scope="col">Genre</th>
+                    <th scope="col">Plot</th>
                     <th scope="col">Run Time</th>
                     <th scope="col">Rating</th>
-                    <!-- Link to trailer video -->
-                    <th scope="col">Trailer</th>
                     <th scope="col">Rank</i></th>
                   </tr>
                 </thead>
@@ -101,6 +99,7 @@
                 <tbody>
                   <!-- Pre-populated samples -->
                   <tr>
+<<<<<<< HEAD
                     <!-- For Nutishia ref: I am adding an id element to test my code -->
                     <th scope="col" id="trmov0">Jaws</th>
                     <th scope="col">Thriller</th>
@@ -117,13 +116,26 @@
                     <th scope="col">PG-13</th>
                     <th scope="col">http://marvel.com/avengers_movie</th> 
                     <th scope="col"><input class="form-control trr" id="trrmov1" placeholder="1-5" type="number"></th>
+=======
+                    <th scope="col">Jaws</th>
+                    <th scope="col">A shark eats a few people.</th>
+                    <th scope="col">124min</th>
+                    <th scope="col">PG</th>
+                    <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>
+                  </tr>
+
+                  <tr>
+                    <th scope="col">The Avengers</th>
+                    <th scope="col">Superheroes save the world.</th>
+                    <th scope="col">143min</th>
+                    <th scope="col">PG-13</th>
+                    <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>
+>>>>>>> ec759173e6994cd30bf59e472be2acaf33a14151
                   </tr>
                   
                   <!-- Movie info from APIs will go here -->
                   
                 </tbody>
-                
-
               </table>
               <button class="btn btn-primary" id="vote-btn">Vote!</button>
               <button class="btn btn-primary" id="results-btn">Get Voting Results!</button>
@@ -131,6 +143,19 @@
           </div>
         </div>
       </div>
+
+      <div class="col-md-12">
+        <!-- Graph Card  -->
+        <div class="card mb-4 p-4">
+          <div class="card-body" id="graph-card">
+            <h3 class="card-title">Your Voting Results</h3>
+            <h6 id="graph">Looks like nobody has voted for anything yet...</h6>
+            <!-- Graph with voting polls will be generated here -->
+
+          </div>
+        </div>
+      </div>
+
     </div>
 
 

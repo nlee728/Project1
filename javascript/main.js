@@ -70,21 +70,24 @@ function groupCheck(gc,group){
         $("#login-conf1").empty();
         $("#login-conf2").empty();
         
-        $("#login-card").append($("<p>",{id:"login-conf1",text:"Group found."}));
+        $("#login-card").append($("<p>",{id:"login-conf1",text:"Group found"}));
         $("#login-card").append($("<p>",{id:"login-conf2",text:"You are now logged in!"}));
         $("#group-input").val("Logged In");
-        $("#login-btn").text("Logged In");
-        $("#login-btn").css({"background-color":"green"});
+
+        // NL - I made some changes to the js and css to improve the UX for these buttons
+        
+        // $("#login-btn").text("Logged In");
+        // $("#login-btn").css({"background-color":"green"});
         return gc;
         ;
     } else {
         $("#login-conf1").empty();
         $("#login-conf2").empty();
-        $("#login-card").append($("<p>",{id:"login-conf1",text:"Group does not exist "}))
-                        .append($("<p>",{id:"login-conf2",text:"Click Add to create the same."}));
+        $("#login-card").append($("<p>",{id:"login-conf1",text:"Group does not exist"}))
+                        .append($("<p>",{id:"login-conf2",text:"Try creating a new group"}));
         $("#add-group-input").val(group);
-        $("#login-btn").text("--->");
-        $("#group-input").val("Not Found");
+        // $("#login-btn").text("--->");
+        // $("#group-input").val("Not Found");
 
                         // .append($("<button>",{text:"Ok",class:"btn-primary",id:"ok-group"}));     
         return gc;
@@ -262,7 +265,7 @@ $('#submit-btn').on("click",function(event){
             var ref = database.ref("GroupsList/" + group);
             ref.set(groupArray);
             writeLogin(group);
-            $("#group-card").append($("<p>",{id:"already-there-note",text:"Group added - login <---"}));
+            $("#group-card").append($("<p>",{id:"already-there-note",text:"New group added"}));
             $("#group-input").val(group);
             $("#submit-button").text("Add another Group ");
 
@@ -274,7 +277,7 @@ $('#submit-btn').on("click",function(event){
 
         } else {
             console.log("already there");
-            $("#group-card").append($("<p>",{id:"already-there-note",text:"Group already exists - no need to add"}));
+            $("#group-card").append($("<p>",{id:"already-there-note",text:"This group already exists - Please login"}));
             $("#submit-button").text("Add another Group ");
         };
 
