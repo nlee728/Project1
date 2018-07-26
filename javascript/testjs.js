@@ -9,6 +9,7 @@ const config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
+//database Ref for an individual group's movies folder in firebase
 var singleGroupRef = database.ref('/groups/TestGroup/movies');
 
 var startDate = '2018-07-26';
@@ -21,10 +22,12 @@ var url = 'http://data.tmsapi.com/v1.1/movies/showings?' +
 
 console.log(url)
 
+//push api data to firebase, commented out to reduce api calls on page load. just un-comment to test.
 /*           $.get(url).then(function(response) {
             getMovieData(response);
           });  */
 
+//display logic for movie data from firebase
 singleGroupRef.on('child_added', function(snapshot) {
   console.log(snapshot.val())
   generateMovies(snapshot.val());
@@ -75,6 +78,7 @@ function getMovieData(data) {
                  zipcode});
 }
 
+//turn runTime format(ISO) to something readable
 function parseRunTime(runTime) {
   var hours = parseInt(runTime.slice(3, runTime.length - 4));
   var minutes = parseInt(runTime.slice(5, runTime.length - 1));
