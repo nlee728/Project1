@@ -99,42 +99,90 @@ function groupCheck(gc,group){
 
 // generateMovies function draws a table of all retrieved movie results based on teh number of rows returned
 
-// function generateMovies(data) {
+function generateMovies(data) {
 
-//     // Remove existing movies
+    // Remove existing movies
 
-//     $("#movie-table").empty();
+    $("#movie-table").empty();
 
-//     var moviesNeeded = {
-//         "Title": data.title,
-//         "Genre": data.genres.join(", "),
-//         "Run Time":data.runTime
+    // SS - change - created a short subset instead of teh entire object
+    var moviesNeeded =[];
+    for (var xx=0; xx < 5; xx++){
+         moviesNeeded.push({
+            "Title": data[xx].title,
+            "Genre": data[xx].genres,
+            "Run Time":data[xx].runTime,
+            "Rating":data[xx].ratings,
+            "Description":data[xx].shortDescription
 
-//     };
+        });
+    };
 
-//     for(let movie of data) {
-//         var tr =  $('<tr>',{id:"tablerow"+data.indexOf(movie)});
+    console.log(moviesNeeded);
 
-//         // IF first row , add the headings
-//         if(data.indexOf(movie)===0) {
-//             var th = $('<th>');
-//             tr.append(th).text(movie.title);
-//             tr.append(th).text(movie.topCase);
-//             tr.append(th).text(movie.officialUrl);
-//             tr.append(th).text(movie.showtimes);             
-//         };
+    drawTable(moviesNeeded);
 
 
-//         var th = $('<th>');
+    // for(let movie of moviesNeeded) {
+    //     var tr =  $('<tr>',{id:"tablerow"+data.indexOf(movie)});
+
+    //     // IF first row , add the headings
+    //     if(data.indexOf(movie)===0) {
+    //         var th = $('<th>');
+    //         tr.append(th).text(movie.Title);
+    //         tr.append(th).text(movie.Genre.join(", "));
+    //         tr.append(th).text(movie["Run Time"]);
+    //         tr.append(th).text(movie["Rating"][0].code);           
+    //         tr.append(th).text(movie["Description"]);  
+    //     };
 
 
-//         $('#movie-table').append(tr);
-//         tr.append(th).text(movie.title);
-//         tr.append(th).text(movie.topCase);
-//         tr.append(th).text(movie.officialUrl);
-//         tr.append(th).text(movie.showtimes);
-//     }
-//   };
+    //     var th = $('<th>');
+
+
+    //     $('#movie-table').append(tr);
+    //     tr.append(th).text(movie.Title);
+    //     tr.append(th).text(movie.Genre);
+    //     tr.append(th).text(movie["Run Time"]);
+    //     tr.append(th).text(movie["Rating"]);           
+    //     tr.append(th).text(movie["Description"]);  
+    
+  };
+
+
+// Function Number 6 - drawTable
+
+function drawTable(ObjectArray){
+
+    $("#movie-table").empty();
+
+    for (var xx=0; xx < ObjectArray.length ; xx++){
+
+        if (xx === 0){
+            
+            for ([key, value] of Object.entries(ObjectArray[xx])) {
+                $("#movie-table").append($("<th>",{text:key,id:"tableHeader"+key.replace(/ +/g,"")}));
+                               
+                } ;  
+
+        };
+
+        $("#movie-table").append($("<tr>",{id:"trow"+xx}));
+
+        for ([key, value] of Object.entries(ObjectArray[xx])) {
+            
+            newkey=key.replace(/ +/g,"");
+            $("#trow"+xx).append($("<td>",{id:"tableBody"+xx+newkey}));
+            $("#tableBody"+xx+newkey).append(value);
+                    
+        };
+
+
+    };
+
+
+
+};
 
 
 // Function number 4
