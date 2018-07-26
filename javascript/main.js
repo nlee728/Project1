@@ -125,10 +125,15 @@ $('#submit-btn').on("click",function(event){
 
             // Thing to do : get movies for this zipcode - clearInterval
             // add that to th egroup array
+            // comment placeholder for callMovieAPI
+
+
 
             groupArray["moviename"] = "Godzilla";
             groupArray["showtime"] = moment().format("DD/MMM/YYYY HH:mm");
             groupArray["Theatre"] = "AMC";
+
+
             var ref = database.ref("GroupsList/" + group);
             ref.set(groupArray);
             writeLogin(group);
@@ -189,3 +194,51 @@ $("#login-btn").on("click",function(event){
 
 
 });
+
+// EH Number 4
+
+// Voting Button event handler runs through all votes and stores them in an Array. 
+// These votes will also be saved to firebase
+
+$("#vote-btn").on("click", function(){
+
+    var Votes;
+    var VotesArray;
+
+
+
+
+
+    // Notes : (for Nutishia's ref:):
+    // - Currently - movie names etc are placeholders, but these will be replaced with dynamic javascript to create the table (keeping the table header)
+    // - the table elements (tr and the td) for movies and rank form-input will have a separate id - this will change based on the number of results the movies api returns
+
+
+    for (var i = 0 ; i < $('.form-control').length ; i ++) {
+        Votes["Movie"] = $("#trmov"+i).val();
+        Votes["Rank"] = $("#trrmov"+i).val();
+        VotesArray.push({"Movie":Votes["Movie"],"Rank":Votes["Rank"]});
+
+
+
+    };
+
+    // Charlie's validation function
+
+});
+
+
+// EH Number 5
+
+// Placeholder EH - when submit all votes is clicked 
+
+$("#results-btn").on("click", function(){
+   
+    // Placeholder for Charlie's API to be called
+
+
+
+});
+
+    
+
