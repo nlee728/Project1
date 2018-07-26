@@ -9,11 +9,9 @@ const config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
+var singleGroupRef = database.ref('/groups/TestGroup/movies');
 
-//moviesRef.set({movies: movieChoice});
-//usersRef.set({users: userName});
-
-var startDate = '2018-07-25';
+var startDate = '2018-07-26';
 var zipcode = '27615';
 var api_key = 'seehjrjvumeesg8pe3e87j9j';
 var url = 'http://data.tmsapi.com/v1.1/movies/showings?' +
@@ -23,9 +21,14 @@ var url = 'http://data.tmsapi.com/v1.1/movies/showings?' +
 
 console.log(url)
 
-$.get(url).then(function(response) {
-  getMovieData(response);
-}); 
+/*           $.get(url).then(function(response) {
+            getMovieData(response);
+          });  */
+
+singleGroupRef.on('child_added', function(snapshot) {
+  console.log(snapshot.val())
+  generateMovies(snapshot.val());
+});
 
 $("#submit-btn").on("click",function(e) {   
   e.preventDefault();
@@ -40,25 +43,24 @@ $("#submit-btn").on("click",function(e) {
 });
 
 
+
+
 function generateMovies(data) {
-  for(let i = 0; i <= 5; i++) {
-      var runTime = data[i].runTime;
-      runTime = runTime.slice(3, runTime.length);
       var tr =  $('<tr>');
       $('#movie-table').append(tr);
-      tr.append(`<th>${data[i].title}</th>`);
-      tr.append(`<th>${data[i].genres[0]}, ${data[i].genres[1]}</th>`);
-      tr.append(`<th>${runTime}</th>`);
-      tr.append(`<th>${data[i].ratings[0].code}</th>`);
-      tr.append(`<th><a href="${data[i].officialUrl}" target="_blank">Trailer</a></th>`);
+      tr.append(`<th>${data.title}</th>`);
+      tr.append(`<th>${data.genre}</th>`);
+      tr.append(`<th>${data.runTime}min</th>`);
+      tr.append(`<th>${data.rating}</th>`);
+      tr.append(`<th><a href="${data.trailer}" target="_blank">Trailer</a></th>`);
       tr.append(`<th><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>`);
-  }
 }
+
 function getMovieData(data) {
   var fiveMovies = []
   console.log(fiveMovies);
   for(let i = 0; i <= 5; i++) {
-      var runTime = data[i].runTime.slice(3, data[i].runTime.length);
+      var runTime = parseRunTime(data[i].runTime);
       fiveMovies.push({title: data[i].title, 
                       genre: data[i].genres[0],
                       runTime: runTime,
@@ -71,4 +73,11 @@ function getMovieData(data) {
   var groupsRef = database.ref('/groups/' + groupName);
   groupsRef.set({movies: fiveMovies,
                  zipcode});
+}
+
+function parseRunTime(runTime) {
+  var hours = parseInt(runTime.slice(3, runTime.length - 4));
+  var minutes = parseInt(runTime.slice(5, runTime.length - 1));
+  var formatedRunTime = (hours * 60) + minutes;
+  return formatedRunTime;
 }
