@@ -44,6 +44,6 @@ label {
     background-color: lightgray;
 }
 
-  .scrolltable {
-    overflow: auto;
+#card-body { 
+    overflow-x: scroll !important;
 }

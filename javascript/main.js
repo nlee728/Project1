@@ -1,3 +1,19 @@
+// Firebase Calls and definitions - taken from John's code
+
+const config = {
+    apiKey: "AIzaSyCwQB5i43m4j4WfQ-XsyqggSLRZVLUtwSI",
+    authDomain: "pickaflick-c5ed5.firebaseapp.com",
+    databaseURL: "https://pickaflick-c5ed5.firebaseio.com",
+    projectId: "pickaflick-c5ed5",
+    storageBucket: "pickaflick-c5ed5.appspot.com",
+    messagingSenderId: "440737258675"
+  };
+  firebase.initializeApp(config);
+  
+  var database = firebase.database();
+
+
+
 // Temp list of groups here - in future - these will come from firebase
 var gc=false;
 var zc=false;
@@ -75,6 +91,72 @@ function groupCheck(gc,group){
     } ;
 };
 
+// Function Number 4 - from John
+
+// Function to draw a table based on results from the callMovie API
+
+// SS - STILL WIP
+
+// generateMovies function draws a table of all retrieved movie results based on teh number of rows returned
+
+// function generateMovies(data) {
+
+//     // Remove existing movies
+
+//     $("#movie-table").empty();
+
+//     var moviesNeeded = {
+//         "Title": data.title,
+//         "Genre": data.genres.join(", "),
+//         "Run Time":data.runTime
+
+//     };
+
+//     for(let movie of data) {
+//         var tr =  $('<tr>',{id:"tablerow"+data.indexOf(movie)});
+
+//         // IF first row , add the headings
+//         if(data.indexOf(movie)===0) {
+//             var th = $('<th>');
+//             tr.append(th).text(movie.title);
+//             tr.append(th).text(movie.topCase);
+//             tr.append(th).text(movie.officialUrl);
+//             tr.append(th).text(movie.showtimes);             
+//         };
+
+
+//         var th = $('<th>');
+
+
+//         $('#movie-table').append(tr);
+//         tr.append(th).text(movie.title);
+//         tr.append(th).text(movie.topCase);
+//         tr.append(th).text(movie.officialUrl);
+//         tr.append(th).text(movie.showtimes);
+//     }
+//   };
+
+
+// Function number 4
+function callMovieAPI(zipcode){
+
+    var startDate = moment().format("YYYY-MM-DD");
+    var api_key = 'seehjrjvumeesg8pe3e87j9j';
+    var url = 'http://data.tmsapi.com/v1.1/movies/showings?' +
+          'startDate=' + startDate +
+          '&zip=' + zipcode +
+          '&api_key=' + api_key;
+  
+     
+    $.get(url).then(function(response) {
+      console.log(response);
+      var data = response;
+      
+      generateMovies(data);
+    });
+  
+  };
+  
 
 // EVENT HANDLERS
 
@@ -125,18 +207,19 @@ $('#submit-btn').on("click",function(event){
             // comment placeholder for callMovieAPI
 
 
-
-            groupArray["moviename"] = "Godzilla";
-            groupArray["showtime"] = moment().format("DD/MMM/YYYY HH:mm");
-            groupArray["Theatre"] = "AMC";
-
-
             var ref = database.ref("GroupsList/" + group);
             ref.set(groupArray);
             writeLogin(group);
             $("#group-card").append($("<p>",{id:"already-there-note",text:"Group added - login <---"}));
             $("#group-input").val(group);
             $("#submit-button").text("Add another Group ");
+
+            // MAke the call to John's function - calling the Movie API
+
+            callMovieAPI(zipcode);
+
+
+
         } else {
             console.log("already there");
             $("#group-card").append($("<p>",{id:"already-there-note",text:"Group already exists - no need to add"}));
