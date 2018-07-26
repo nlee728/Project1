@@ -164,6 +164,7 @@ function drawTable(ObjectArray){
                 $("#movie-table").append($("<th>",{text:key,id:"tableHeader"+key.replace(/ +/g,"")}));
                                
                 } ;  
+            $("#movie-table").append($("<th>",{text:"Your Vote",id:"tableHeader"+"Vote"}));
 
         };
 
@@ -176,6 +177,9 @@ function drawTable(ObjectArray){
             $("#tableBody"+xx+newkey).append(value);
                     
         };
+
+        $("#trow"+xx).append($("<td>",{id:"tableBody"+xx+"Vote"}));
+        $("#tableBody"+xx+"Vote").append($("<input>",{class:"form-control",id:"vote-form"+xx}));
 
 
     };
