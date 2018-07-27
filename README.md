@@ -1,34 +1,3 @@
-# Project1
-Project1
+Pick A Flick Application
 
-
-Ideas:
-1. Fantasy league of movies/actors
-2. News search
-3. Madlib gifs
-4. Movie remakes using gifs
-
-Project Title: Pick a Flick!
-
-Team Members: 
-Charlie Sowers
-John Tillman
-Nutishia Lee
-Sundaresh Sankaran
-
-
-Project Description:
-An app that allows a group of people to access a page where they can vote on which movie to go see. They will vote suggested movies from the group up or down and make a final selection when the majority of the group agrees. They can then vote on the showtimes and locations for the movie they have chosen. 
-
-Final Product Sketch:
-
-
-APIs To Be Used:
-Open Agora  
-Fandango  
-
-Task Breakdown:
-1. HTML/CSS and UX/UI - Nutishia
-2. Javascript on-click functionality - Sundaresh
-3. Firebase database setup - John
-4. API integration - Charlie
+Every weekend, all across the globe, fights break out between friends trying to decide which movie to go see that night. Pick a Flick is here to solve the problem. Users will be able to create a group and vote with other users in the group on movies available in their zipcode. The TMS API will choose 5 movies and once the users submit their votes, the Open Agora API will tally the votes and show the winning movie. Users will then be able to votes on showtimes for their chosen movie. Voila! Problem solved. 
