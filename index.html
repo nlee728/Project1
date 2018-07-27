@@ -123,20 +123,65 @@
             </div>
           </div>
         </div>
+        
       </div>
 
+      <!-- Movie Voting Results Graph -->
       <div class="col-md-12">
         <!-- Graph Card  -->
         <div class="card mb-4 p-4">
           <div class="card-body" id="graph-card">
             <h3 class="card-title">Your Voting Results</h3>
             <h6 id="graph">Looks like nobody has voted for anything yet...</h6>
+
             <!-- Graph with voting polls will be generated here -->
 
           </div>
         </div>
       </div>
 
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Current List of Suggested Showtimes-->
+        <div class="card mb-4">
+          <div class="card-body" id="card-body">
+            <h3 class="card-title">Suggested Showtimes</h3>
+            <table class="table table-sm table-hover" id="showtimes-table" style="overflow-x:auto;">
+              <thead>
+                <tr>
+                  <th scope="col">Theater Name</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Start Time</th>
+                  <th scope="col">Theater Website</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <!-- Pre-populated samples -->
+                <!-- <tr>
+                  <th scope="col">AMC</th>
+                  <th scope="col">Some random location</th>
+                  <th scope="col">3:00am</th>
+                  <th scope="col">www.amc.com</th>
+                  <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>
+                </tr> -->
+
+  
+                <!-- Showtime info from APIs will go here -->
+                
+              </tbody>
+            </table>
+            <button class="btn btn-primary" id="vote-btn">Vote!</button>
+            <button class="btn btn-primary" id="results-btn">Get Voting Results!</button>
+          </div>
+        </div>
+        <div class="card-footer text-muted">
+          ©2018 Powered by TMS and Open Agora APIs
+        </div>
+      </div>
+      
     </div>
 
 
@@ -148,7 +193,7 @@
     
     
     <!-- Javascript -->
-    <script src="../Project1/javascript/app2.js"></script>
+    <!-- <script src="../Project1/javascript/app2.js"></script> -->
     
     <script src="../Project1/javascript/main.js"></script>
 
