@@ -115,7 +115,7 @@ function generateMovies(data) {
             "Title": data[xx].title,
             "Genre": data[xx].genres,
             "Run Time":data[xx].runTime,
-            "Rating":data[xx].ratings,
+            "Rating":data[xx].ratings[0].code,
             "Description":data[xx].shortDescription
 
         });
@@ -193,7 +193,7 @@ function drawTable(ObjectArray){
 
 
 // Function number 4
-function callMovieAPI(zipcode){
+function callMovieAPI(zipcode, group){
 
     var startDate = moment().format("YYYY-MM-DD");
     var api_key = 'seehjrjvumeesg8pe3e87j9j';
@@ -208,9 +208,70 @@ function callMovieAPI(zipcode){
       var data = response;
       
       generateMovies(data);
+      createPoll(data, group);
     });
   
   };
+
+  function createPoll(data, group){
+
+        console.log(group);
+        
+        var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/with-choices?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO"
+
+        var headers = {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+        };
+
+        var pollObj = {"title": group, choices: [{label: data[0].title}, {label: data[1].title}, {label: data[2].title},
+                                                 {label: data[3].title},{label: data[4].title}]}
+
+        console.log("pollOBJ: " + JSON.stringify(pollObj));                                        
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+
+            dataType: 'json',
+            headers: headers,
+            
+            processData: false,
+            data: JSON.stringify(pollObj),
+            success: function (response) {
+                console.log(JSON.stringify(response));
+                var movies = database.ref("GroupsList/" + group + '/movies');
+                var groupref = database.ref("GroupsList/" + group);
+                var moviesObj = {pollID: response.id,
+                                movie0: new Movie(data[0].title, data[0].runTime, data[0].shortDescription, data[0].ratings[0].code, response.choices[0].id),
+                                movie1: new Movie(data[1].title, data[1].runTime, data[1].shortDescription, data[1].ratings[0].code, response.choices[1].id),
+                                movie2: new Movie(data[2].title, data[2].runTime, data[2].shortDescription, data[2].ratings[0].code, response.choices[2].id),
+                                movie3: new Movie(data[3].title, data[3].runTime, data[3].shortDescription, data[3].ratings[0].code, response.choices[3].id),
+                                movie4: new Movie(data[4].title, data[4].runTime, data[4].shortDescription, data[4].ratings[0].code, response.choices[4].id)
+                                }
+                movies.set(moviesObj);
+
+                $("#vote-form0").attr("choiceID", response.choices[0].id);
+                $("#vote-form1").attr("choiceID", response.choices[1].id);
+                $("#vote-form2").attr("choiceID", response.choices[2].id);
+                $("#vote-form3").attr("choiceID", response.choices[3].id);
+                $("#vote-form4").attr("choiceID", response.choices[4].id);
+            },
+            error: function(){
+            alert("Cannot get data");
+            }
+        });
+  }
+
+  class Movie {
+      constructor(title, runTime, shortDescription, Rating, choiceID){
+          this.title = title;
+          this.runTime = runTime;
+          this.shortDescription = shortDescription;
+          this.Rating = Rating;
+          this.choiceID = choiceID;
+      }
+  }
   
 
 // EVENT HANDLERS
@@ -271,7 +332,7 @@ $('#submit-btn').on("click",function(event){
 
             // MAke the call to John's function - calling the Movie API
 
-            callMovieAPI(zipcode);
+            callMovieAPI(zipcode, group);
 
 
 
