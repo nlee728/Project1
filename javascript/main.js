@@ -182,7 +182,7 @@ function drawTable(ObjectArray){
         };
 
         $("#trow"+xx).append($("<td>",{id:"tableBody"+xx+"Vote"}));
-        $("#tableBody"+xx+"Vote").append($("<input>",{class:"form-control",id:"vote-form"+xx}));
+        $("#tableBody"+xx+"Vote").append($("<input>",{class:"form-control",type:"number",id:"vote-form"+xx}));
 
 
     };
