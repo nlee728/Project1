@@ -326,7 +326,7 @@ $('#submit-btn').on("click",function(event){
     $("#already-there-note").remove();
 
     var group = $("#add-group-input").val();
-    group = group.replace(/\s/g, '');
+    group = group.replace(/\s/g, '').toLowerCase();
     
 
 // Capture zipcode
@@ -390,6 +390,7 @@ $("#login-btn").on("click",function(event){
     var group = $("#group-input").val().trim();
     group = group.replace(/\s/g, '');
     $("#group-input").val("");
+    group = group.replace(/\s/g, '').toLowerCase();
     //Check if Group already exists
     
 
