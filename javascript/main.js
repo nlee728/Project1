@@ -327,6 +327,7 @@ $('#submit-btn').on("click",function(event){
 
     var group = $("#add-group-input").val();
     group = group.replace(/\s/g, '').toLowerCase();
+
     
 
 // Capture zipcode
