@@ -389,6 +389,7 @@ $("#login-btn").on("click",function(event){
     // GRoup should be captured
     var group = $("#group-input").val().trim();
     $("#group-input").val("");
+    group = group.replace(/\s/g, '');
     //Check if Group already exists
     
 
