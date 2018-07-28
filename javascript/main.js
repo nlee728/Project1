@@ -62,10 +62,7 @@ function writeLogin(group){
 
 function groupCheck(gc,group){
 
-console.log("In GRoup check");
-console.log(gc);
-console.log(groups);
-console.log(group);
+
 
     if (groups.indexOf(group.trim()) > -1 ) {
 
@@ -76,7 +73,7 @@ console.log(group);
         $("#login-card").append($("<p>",{id:"login-conf1",text:"Group found"}));
         $("#login-card").append($("<p>",{id:"login-conf2",text:"You are now logged in!"}));
         $("#group-input").val("Logged In");
-        console.log("Logged In");
+        
         return gc;
         ;
     } else {
@@ -133,11 +130,11 @@ function generateMovies(data) {
     };
 
     database.ref("GroupsList/"+group+"/movies/").set(moviesNeeded);
-    console.log("After PUSH");
 
-    console.log(moviesNeeded);
 
     drawTable(moviesNeeded);
+
+
 
 
 
@@ -148,9 +145,13 @@ function generateMovies(data) {
 
 function drawTable(ObjectArray){
 
+
+
     $("#movie-table").empty();
 
-    for (var xx=0; xx < ObjectArray.length ; xx++){
+    console.log(ObjectArray.length + "is the length");
+
+    for (var xx=0; xx < Math.min(5,ObjectArray.length-1) ; xx++){
 
         if (xx === 0){
             
@@ -176,7 +177,7 @@ function drawTable(ObjectArray){
         $("#tableBody"+xx+"Vote").append($("<input>",{class:"form-control",type:"number",id:"vote-form"+xx}));
         $("#movie-table").css({"text-align":"left"});
 
-        console.log(group);
+        
 
 
     };
@@ -198,8 +199,7 @@ function callMovieAPI(zipcode, group){
   
      
     $.get(url).then(function(response) {
-      console.log(response);
-      console.log(url);
+
       var data = response;
       
       generateMovies(data);
@@ -212,7 +212,7 @@ function callMovieAPI(zipcode, group){
 
   function createPoll(data, group){
 
-        console.log(group);
+        
         
         var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/with-choices?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO"
 
@@ -255,6 +255,18 @@ function callMovieAPI(zipcode, group){
                                 movie3: new Movie(data[3].title, data[3].runTime, data[3].shortDescription, data[3].ratings[0].code, response.choices[3].id),
                                 movie4: new Movie(data[4].title, data[4].runTime, data[4].shortDescription, data[4].ratings[0].code, response.choices[4].id)
                                 }
+
+                // var moviesObj = {pollID: response.id,
+                //     "movies": [ new Movie(data[0].title, data[0].runTime, data[0].shortDescription, data[0].ratings[0].code, response.choices[0].id),
+                //      new Movie(data[1].title, data[1].runTime, data[1].shortDescription, data[1].ratings[0].code, response.choices[1].id),
+                //      new Movie(data[2].title, data[2].runTime, data[2].shortDescription, data[2].ratings[0].code, response.choices[2].id),
+                //      new Movie(data[3].title, data[3].runTime, data[3].shortDescription, data[3].ratings[0].code, response.choices[3].id),
+                //      new Movie(data[4].title, data[4].runTime, data[4].shortDescription, data[4].ratings[0].code, response.choices[4].id)]
+                //     };
+    
+
+
+
                 movies.set(moviesObj);
 
                 $("#vote-form0").attr("choiceID", response.choices[0].id);
@@ -293,17 +305,14 @@ database.ref("GroupsList").on("value", function(snapshot) {
     
 
     for (key of Object.entries(snapshot.val())){
-        groups.push(key[1].groupName.trim());
+        groups.push(key[1].groupName);
         var kn=key[1].groupName;
         kz=key[1].movies;
         var groupObjects1 ={};
-        groupObjects1[kn] = kz;
+        groupObjects1 = {"group":kn,"movies":kz};
         groupsObjects.push(groupObjects1);
 
-        // groupsObjects.push( { kn : kz } );
-        console.log(kn);
-        console.log("this is groupsObjects");
-        console.log(groupsObjects);
+
     };
   
 });
@@ -318,7 +327,7 @@ $('#submit-btn').on("click",function(event){
 
     var group = $("#add-group-input").val();
     group = group.replace(/\s/g, '');
-    console.log(group);
+    
 
 // Capture zipcode
     var zipcode = $("#zipcode-input").val();
@@ -326,7 +335,7 @@ $('#submit-btn').on("click",function(event){
     if (zc === false) {
                 // Check the zipcode
                 zc=zipValid(zc,zipcode);
-                console.log(zc);
+                
     };
 
     // SS - Right now - I consider one group to be fixed to just one zipcode - however - we can add an array of zipcodes to the list later on)
@@ -355,7 +364,7 @@ $('#submit-btn').on("click",function(event){
 
 
         } else {
-            console.log("already there");
+
             $("#group-card").append($("<p>",{id:"already-there-note",text:"This group already exists - Please login"}));
             $("#submit-button").text("Add another Group ");
         };
@@ -382,13 +391,12 @@ $("#login-btn").on("click",function(event){
     $("#group-input").val("");
     //Check if Group already exists
     
-    console.log("checking first time");
+
     recCheck(gc);
     function recCheck(gc){
     if (gc === false) { 
         gc=groupCheck(gc,group);
-        console.log()
-        console.log(gc);
+
 
         getMoviesforGroup(group);
 
@@ -444,8 +452,6 @@ $("#vote-btn").on("click", function(){
     };
 
     // for checking 
-    console.log("The resulting array");
-    console.log(VotesArray);
 
     // Charlie's validation function
 
@@ -454,11 +460,10 @@ $("#vote-btn").on("click", function(){
         var testArray = [];
         for(var i = 0; i<vote.length; i++){
             rank = parseInt(vote[i].Rank);
-            console.log(rank);
             if(rank <= vote.length && rank>0){
                 testArray[rank-1] = parseInt(rank);
             }
-            console.log(testArray);
+
         }
         for(var i = 0; i<vote.length; i++){
             if(testArray[i] != i+1){
@@ -470,7 +475,6 @@ $("#vote-btn").on("click", function(){
 
 
     vc = testVote(VotesArray);
-    console.log(vc);
 
     if (vc === false) {
 
@@ -531,26 +535,18 @@ function getMoviesforGroup(group){
 
     var groupreference =  database.ref("GroupsList/" + group + "/movies/");
     groupreference.on("value", function(snapshot){
-    console.log(snapshot.val());
-    drawTable(snapshot.val());
+    
+
+    var movieArray = Object.keys(snapshot.val()).map(function(key) {
+        return snapshot.val()[key];
+      });
+ 
+
+
+    drawTable(movieArray);
 
     });
-    // var groupreference =  database.ref("GroupsList/"+group+"/movies/");
-    // groupreference.on("value", function(snapshot){
 
-    //     drawTable(snapshot.val());
-
-    // });
-
-    for (var a = 0 ; a < groupsObjects.length; a++){
-
-        if (group in groupsObjects[a]){
-            moviesNeeded = groupsObjects[a][group];
-        } 
-
-    };
-
-    console.log(moviesNeeded);
-    drawTable(moviesNeeded);
+   
 
 };
