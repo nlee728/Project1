@@ -61,15 +61,13 @@ function writeLogin(group){
 // The groupCheck function checks if a group already exists or not, and handles the resulting notifications
 
 function groupCheck(gc,group){
-    console.log(group);
-    console.log(groups);
 
+console.log("In GRoup check");
+console.log(gc);
+console.log(groups);
+console.log(group);
 
-
-    
-    // console.log(groupObjects[group]);
-
-    if (groups.indexOf(group) > -1 ) {
+    if (groups.indexOf(group.trim()) > -1 ) {
 
         gc=true;
         $("#login-conf1").empty();
@@ -78,10 +76,7 @@ function groupCheck(gc,group){
         $("#login-card").append($("<p>",{id:"login-conf1",text:"Group found"}));
         $("#login-card").append($("<p>",{id:"login-conf2",text:"You are now logged in!"}));
         $("#group-input").val("Logged In");
-                // NL - I made some changes to the js and css to improve the UX for these buttons
-        
-        // $("#login-btn").text("Logged In");
-        // $("#login-btn").css({"background-color":"green"});
+        console.log("Logged In");
         return gc;
         ;
     } else {
@@ -298,7 +293,7 @@ database.ref("GroupsList").on("value", function(snapshot) {
     
 
     for (key of Object.entries(snapshot.val())){
-        groups.push(key[1].groupName);
+        groups.push(key[1].groupName.trim());
         var kn=key[1].groupName;
         kz=key[1].movies;
         var groupObjects1 ={};
@@ -393,7 +388,8 @@ $("#login-btn").on("click",function(event){
         gc=groupCheck(gc,group);
         console.log()
         console.log(gc);
-       
+
+        getMoviesforGroup(group);
 
        };
 
@@ -527,3 +523,27 @@ movies.on("value", function(snapshot) {
     // };
   
 });
+
+
+
+function getMoviesforGroup(group){
+
+    // var groupreference =  database.ref("GroupsList/"+group+"/movies/");
+    // groupreference.on("value", function(snapshot){
+
+    //     drawTable(snapshot.val());
+
+    // });
+
+    for (var a = 0 ; a < groupsObjects.length; a++){
+
+        if (group in groupsObjects[a]){
+            moviesNeeded = groupsObjects[a][group];
+        } 
+
+    };
+
+    console.log(moviesNeeded);
+    drawTable(moviesNeeded);
+
+};
