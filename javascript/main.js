@@ -120,7 +120,8 @@ function generateMovies(data) {
                 "Title": data[xx].title,
                 "Run Time":moment.duration(data[xx].runTime).asMinutes(),
                 "Description":data[xx].shortDescription,                
-                "Rating":data[xx].ratings[0].code
+                "Rating":data[xx].ratings[0].code,
+                "Showtimes": data[xx].showtimes
                 
 
             });
