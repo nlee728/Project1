@@ -9,6 +9,7 @@ const config = {
     messagingSenderId: "440737258675"
   };
   firebase.initializeApp(config);
+
   
   var database = firebase.database();
 
@@ -19,6 +20,7 @@ var gc=false;
 var zc=false;
 // I really dont think this is neeeded , but playing it safe for now
 var group='Default';
+var pollID = '';
 var groupsObjects=[];
 
 // Functions "hoisted" here
@@ -222,9 +224,7 @@ function callMovieAPI(zipcode, group){
         };
 
         var pollObj = {"title": group, choices: [{label: data[0].title}, {label: data[1].title}, {label: data[2].title},
-                                                 {label: data[3].title},{label: data[4].title}]}
-
-        console.log("pollOBJ: " + JSON.stringify(pollObj));                                        
+                                                 {label: data[3].title},{label: data[4].title}]}                                     
 
         $.ajax({
             url: url,
@@ -246,7 +246,7 @@ function callMovieAPI(zipcode, group){
                     };
 
                 };
-
+                pollID = response.id;
 
                 var moviesObj = {pollID: response.id,
                                 movie0: new Movie(data[0].title, data[0].runTime, data[0].shortDescription, data[0].ratings[0].code, response.choices[0].id),
@@ -325,7 +325,7 @@ $('#submit-btn').on("click",function(event){
     event.preventDefault();
     $("#already-there-note").remove();
 
-    var group = $("#add-group-input").val();
+    group = $("#add-group-input").val();
     group = group.replace(/\s/g, '');
     
 
@@ -387,7 +387,7 @@ $("#login-btn").on("click",function(event){
     $("#login-conf2").remove();
     
     // GRoup should be captured
-    var group = $("#group-input").val().trim();
+    group = $("#group-input").val().trim();
     $("#group-input").val("");
     //Check if Group already exists
     
@@ -429,7 +429,7 @@ $("#login-btn").on("click",function(event){
 
 $("#vote-btn").on("click", function(){
 
-    var Votes={Movie:"",Rank:""};
+    
     var VotesArray=[];
 
     $("#not-vote-msg").remove();
@@ -439,27 +439,60 @@ $("#vote-btn").on("click", function(){
     // Notes : (for Nutishia's ref:):
     // - Currently - movie names etc are placeholders, but these will be replaced with dynamic javascript to create the table (keeping the table header)
     // - the table elements (tr and the td) for movies and rank form-input will have a separate id - this will change based on the number of results the movies api returns
+    console.log($('.trr').length);
 
-
-    for (var i = 0 ; i < $('.trr').length ; i ++) {
-        Votes["Movie"] = $("#trmov"+i).text();
-        Votes["Rank"] = $("#trrmov"+i).val();
-        VotesArray.push({"Movie":Votes["Movie"],"Rank":Votes["Rank"]});
+    for (var i = 0 ; i < 5 ; i ++) {
+        var Votes = {};
+        Votes["choice_id"] = $("#tableBody" + i + "choiceID").text();
+        console.log($("#tableBody" + i + "choiceID").text());
+        Votes["rank"] = parseInt($("#vote-form"+i).val());
+        VotesArray.push(Votes);
      
 
 
 
     };
 
+    console.log(JSON.stringify(VotesArray));
+
     // for checking 
 
     // Charlie's validation function
+
+    if(testVote(VotesArray)){
+
+        var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/votes/for-poll/" + pollID + "?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO";
+    
+        var headers = {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+        };
+
+        console.log(JSON.stringify(VotesArray));
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+    
+            dataType: 'json',
+            headers: headers,
+    
+            processData: false,
+            data: JSON.stringify(VotesArray),
+            success: function (data) {
+                console.log(JSON.stringify(data));
+            },
+            error: function(){
+            alert("Cannot get data");
+            }
+        });
+    }
 
 
     function testVote(vote){
         var testArray = [];
         for(var i = 0; i<vote.length; i++){
-            rank = parseInt(vote[i].Rank);
+            rank = parseInt(vote[i].rank);
             if(rank <= vote.length && rank>0){
                 testArray[rank-1] = parseInt(rank);
             }
@@ -492,10 +525,34 @@ $("#vote-btn").on("click", function(){
 // Placeholder EH - when submit all votes is clicked 
 
 $("#results-btn").on("click", function(){
+
+    console.log(pollID);
+
+    var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/" + pollID + "/results/condorcet?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO"
+
+    var headers = {
+             'Accept': 'application/json',
+             'Content-type': 'application/json'
+     };
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+
+        
+        headers: headers,
+        
+        
+        success: function (data) {
+          console.log(JSON.stringify(data));
+          $("#graph-card").text("The Winner is " + data[0].choice.label);
+        },
+        error: function(){
+          alert("Cannot get data");
+        }
+    });
    
     // Placeholder for Charlie's API to be called
-
-
 
 });
 
@@ -536,7 +593,7 @@ function getMoviesforGroup(group){
     var groupreference =  database.ref("GroupsList/" + group + "/movies/");
     groupreference.on("value", function(snapshot){
     
-
+    pollID = snapshot.val().pollID;
     var movieArray = Object.keys(snapshot.val()).map(function(key) {
         return snapshot.val()[key];
       });
