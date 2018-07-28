@@ -61,10 +61,13 @@ function writeLogin(group){
 // The groupCheck function checks if a group already exists or not, and handles the resulting notifications
 
 function groupCheck(gc,group){
-    console.log(group);
-    console.log(groups);
 
-    if (groups.indexOf(group.trim()) > -1) {
+console.log("In GRoup check");
+console.log(gc);
+console.log(groups);
+console.log(group);
+
+    if (groups.indexOf(group.trim()) > -1 ) {
 
         gc=true;
         $("#login-conf1").empty();
@@ -73,11 +76,7 @@ function groupCheck(gc,group){
         $("#login-card").append($("<p>",{id:"login-conf1",text:"Group found"}));
         $("#login-card").append($("<p>",{id:"login-conf2",text:"You are now logged in!"}));
         $("#group-input").val("Logged In");
-
-        // NL - I made some changes to the js and css to improve the UX for these buttons
-        
-        // $("#login-btn").text("Logged In");
-        // $("#login-btn").css({"background-color":"green"});
+        console.log("Logged In");
         return gc;
         ;
     } else {
@@ -111,15 +110,30 @@ function generateMovies(data) {
     // SS - change - created a short subset instead of teh entire object
     var moviesNeeded =[];
     for (var xx=0; xx < 5; xx++){
-         moviesNeeded.push({
-            "Title": data[xx].title,
-            "Run Time":moment.duration(data[xx].runTime).asMinutes(),
-            "Description":data[xx].shortDescription,                
-            "Rating":data[xx].ratings[0].code
-            
+        // dont push if language is not english
 
-        });
+        if( data[xx].descriptionLang === "en"){
+
+            if (!(data[xx].shortDescription)) {
+                data[xx]["shortDescription"] = " Unavailable";
+            };
+
+
+            moviesNeeded.push({
+                "Title": data[xx].title,
+                "Run Time":moment.duration(data[xx].runTime).asMinutes(),
+                "Description":data[xx].shortDescription,                
+                "Rating":data[xx].ratings[0].code
+                
+
+            });
+
+        };
+
     };
+
+    database.ref("GroupsList/"+group+"/movies/").set(moviesNeeded);
+    console.log("After PUSH");
 
     console.log(moviesNeeded);
 
@@ -162,6 +176,9 @@ function drawTable(ObjectArray){
         $("#tableBody"+xx+"Vote").append($("<input>",{class:"form-control",type:"number",id:"vote-form"+xx}));
         $("#movie-table").css({"text-align":"left"});
 
+        console.log(group);
+
+
     };
 
 
@@ -182,6 +199,7 @@ function callMovieAPI(zipcode, group){
      
     $.get(url).then(function(response) {
       console.log(response);
+      console.log(url);
       var data = response;
       
       generateMovies(data);
@@ -189,6 +207,8 @@ function callMovieAPI(zipcode, group){
     });
   
   };
+
+// function number 6 
 
   function createPoll(data, group){
 
@@ -217,8 +237,17 @@ function callMovieAPI(zipcode, group){
             data: JSON.stringify(pollObj),
             success: function (response) {
                 console.log(JSON.stringify(response));
-                var movies = database.ref("GroupsList/" + group + '/movies');
+                var movies = database.ref("GroupsList/" + group + '/movies/');
                 var groupref = database.ref("GroupsList/" + group);
+                for (var xyz=0 ; xyz < 5 ; xyz ++){
+                
+                    if (!(data[xyz].shortDescription)) {
+                        data[xyz]["shortDescription"] = " Unavailable";
+                    };
+
+                };
+
+
                 var moviesObj = {pollID: response.id,
                                 movie0: new Movie(data[0].title, data[0].runTime, data[0].shortDescription, data[0].ratings[0].code, response.choices[0].id),
                                 movie1: new Movie(data[1].title, data[1].runTime, data[1].shortDescription, data[1].ratings[0].code, response.choices[1].id),
@@ -264,9 +293,9 @@ database.ref("GroupsList").on("value", function(snapshot) {
     
 
     for (key of Object.entries(snapshot.val())){
-        groups.push(key[1].groupName);
+        groups.push(key[1].groupName.trim());
         var kn=key[1].groupName;
-        kz=key[1].zipcode;
+        kz=key[1].movies;
         var groupObjects1 ={};
         groupObjects1[kn] = kz;
         groupsObjects.push(groupObjects1);
@@ -288,6 +317,7 @@ $('#submit-btn').on("click",function(event){
     $("#already-there-note").remove();
 
     var group = $("#add-group-input").val();
+    group = group.replace(/\s/g, '');
     console.log(group);
 
 // Capture zipcode
@@ -348,7 +378,7 @@ $("#login-btn").on("click",function(event){
     $("#login-conf2").remove();
     
     // GRoup should be captured
-    var group = $("#group-input").val();
+    var group = $("#group-input").val().trim();
     $("#group-input").val("");
     //Check if Group already exists
     
@@ -357,7 +387,11 @@ $("#login-btn").on("click",function(event){
     function recCheck(gc){
     if (gc === false) { 
         gc=groupCheck(gc,group);
+        console.log()
         console.log(gc);
+
+        getMoviesforGroup(group);
+
        };
 
        
@@ -371,6 +405,7 @@ $("#login-btn").on("click",function(event){
 
        if (gc===true) {
         writeLogin(group);
+        
        };
     };
 
@@ -461,4 +496,44 @@ $("#results-btn").on("click", function(){
 });
 
     
+// EH Number 6 
 
+// Pull snapshot of movies 
+
+var movies = database.ref("GroupsList/" + "coders" + '/movies');
+
+movies.on("value", function(snapshot) {
+
+
+    console.log(snapshot.val());
+    // groups = []; 
+    
+
+    // for (key of Object.entries(snapshot.val())){
+    //     groups.push(key[1].groupName);
+    //     var kn=key[1].groupName;
+    //     kz=key[1].zipcode;
+    //     var groupObjects1 ={};
+    //     groupObjects1[kn] = kz;
+    //     groupsObjects.push(groupObjects1);
+
+    //     // groupsObjects.push( { kn : kz } );
+    //     console.log(kn);
+    //     console.log("this is groupsObjects");
+    //     console.log(groupsObjects);
+    // };
+  
+});
+
+
+
+function getMoviesforGroup(group){
+
+    var groupreference =  database.ref("GroupsList/" + group + "/movies/");
+    groupreference.on("value", function(snapshot){
+    console.log(snapshot.val());
+    drawTable(snapshot.val());
+
+    });
+
+};
