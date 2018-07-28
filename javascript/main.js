@@ -535,5 +535,22 @@ function getMoviesforGroup(group){
     drawTable(snapshot.val());
 
     });
+    // var groupreference =  database.ref("GroupsList/"+group+"/movies/");
+    // groupreference.on("value", function(snapshot){
+
+    //     drawTable(snapshot.val());
+
+    // });
+
+    for (var a = 0 ; a < groupsObjects.length; a++){
+
+        if (group in groupsObjects[a]){
+            moviesNeeded = groupsObjects[a][group];
+        } 
+
+    };
+
+    console.log(moviesNeeded);
+    drawTable(moviesNeeded);
 
 };
