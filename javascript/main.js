@@ -150,6 +150,8 @@ function drawTable(ObjectArray){
 
     $("#movie-table").empty();
 
+
+
     for (var xx=0; xx < ObjectArray.length ; xx++){
 
         if (xx === 0){
@@ -297,7 +299,7 @@ database.ref("GroupsList").on("value", function(snapshot) {
         var kn=key[1].groupName;
         kz=key[1].movies;
         var groupObjects1 ={};
-        groupObjects1[kn] = kz;
+        groupObjects1 = {"group":kn,"movies":kz};
         groupsObjects.push(groupObjects1);
 
         // groupsObjects.push( { kn : kz } );
@@ -535,11 +537,15 @@ function getMoviesforGroup(group){
 
     // });
 
+    console.log(group);
+
     for (var a = 0 ; a < groupsObjects.length; a++){
 
-        if (group in groupsObjects[a]){
-            moviesNeeded = groupsObjects[a][group];
-        } 
+        if (group  === groupsObjects[a].group.trim()){
+           console.log("found");
+           console.log(groupsObjects[a]);
+            var moviesNeeded = groupsObjects[a].movies;
+        }; 
 
     };
 
