@@ -327,11 +327,7 @@ $('#submit-btn').on("click",function(event){
 
     var group = $("#add-group-input").val();
     group = group.replace(/\s/g, '');
-<<<<<<< HEAD
-    console.log(group);
-=======
     
->>>>>>> a991f570c02637ae69e6c15e580859aba376eb52
 
 // Capture zipcode
     var zipcode = $("#zipcode-input").val();
@@ -392,6 +388,7 @@ $("#login-btn").on("click",function(event){
     
     // GRoup should be captured
     var group = $("#group-input").val().trim();
+    group = group.replace(/\s/g, '');
     $("#group-input").val("");
     //Check if Group already exists
     
