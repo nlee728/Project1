@@ -19,7 +19,7 @@ var gc=false;
 var zc=false;
 // I really dont think this is neeeded , but playing it safe for now
 var group='Default';
-
+var groupsObjects=[];
 
 // Functions "hoisted" here
 
@@ -113,10 +113,10 @@ function generateMovies(data) {
     for (var xx=0; xx < 5; xx++){
          moviesNeeded.push({
             "Title": data[xx].title,
-            "Genre": data[xx].genres,
-            "Run Time":data[xx].runTime,
-            "Rating":data[xx].ratings[0].code,
-            "Description":data[xx].shortDescription
+            "Run Time":moment.duration(data[xx].runTime).asMinutes(),
+            "Description":data[xx].shortDescription,                
+            "Rating":data[xx].ratings[0].code
+            
 
         });
     };
@@ -126,30 +126,7 @@ function generateMovies(data) {
     drawTable(moviesNeeded);
 
 
-    // for(let movie of moviesNeeded) {
-    //     var tr =  $('<tr>',{id:"tablerow"+data.indexOf(movie)});
 
-    //     // IF first row , add the headings
-    //     if(data.indexOf(movie)===0) {
-    //         var th = $('<th>');
-    //         tr.append(th).text(movie.Title);
-    //         tr.append(th).text(movie.Genre.join(", "));
-    //         tr.append(th).text(movie["Run Time"]);
-    //         tr.append(th).text(movie["Rating"][0].code);           
-    //         tr.append(th).text(movie["Description"]);  
-    //     };
-
-
-    //     var th = $('<th>');
-
-
-    //     $('#movie-table').append(tr);
-    //     tr.append(th).text(movie.Title);
-    //     tr.append(th).text(movie.Genre);
-    //     tr.append(th).text(movie["Run Time"]);
-    //     tr.append(th).text(movie["Rating"]);           
-    //     tr.append(th).text(movie["Description"]);  
-    
   };
 
 
@@ -183,7 +160,7 @@ function drawTable(ObjectArray){
 
         $("#trow"+xx).append($("<td>",{id:"tableBody"+xx+"Vote"}));
         $("#tableBody"+xx+"Vote").append($("<input>",{class:"form-control",type:"number",id:"vote-form"+xx}));
-
+        $("#movie-table").css({"text-align":"left"});
 
     };
 
@@ -284,11 +261,22 @@ function callMovieAPI(zipcode, group){
 database.ref("GroupsList").on("value", function(snapshot) {
     console.log(snapshot.val());
     groups = []; 
+    
 
     for (key of Object.entries(snapshot.val())){
         groups.push(key[1].groupName);
-    };
+        var kn=key[1].groupName;
+        kz=key[1].zipcode;
+        var groupObjects1 ={};
+        groupObjects1[kn] = kz;
+        groupsObjects.push(groupObjects1);
 
+        // groupsObjects.push( { kn : kz } );
+        console.log(kn);
+        console.log("this is groupsObjects");
+        console.log(groupsObjects);
+    };
+  
 });
 
 // EH Number 2
