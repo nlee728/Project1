@@ -317,6 +317,7 @@ $('#submit-btn').on("click",function(event){
     $("#already-there-note").remove();
 
     var group = $("#add-group-input").val();
+    group = group.replace(/\s/g, '');
     console.log(group);
 
 // Capture zipcode
@@ -377,7 +378,7 @@ $("#login-btn").on("click",function(event){
     $("#login-conf2").remove();
     
     // GRoup should be captured
-    var group = $("#group-input").val();
+    var group = $("#group-input").val().trim();
     $("#group-input").val("");
     //Check if Group already exists
     
@@ -528,22 +529,11 @@ movies.on("value", function(snapshot) {
 
 function getMoviesforGroup(group){
 
-    // var groupreference =  database.ref("GroupsList/"+group+"/movies/");
-    // groupreference.on("value", function(snapshot){
+    var groupreference =  database.ref("GroupsList/" + group + "/movies/");
+    groupreference.on("value", function(snapshot){
+    console.log(snapshot.val());
+    drawTable(snapshot.val());
 
-    //     drawTable(snapshot.val());
-
-    // });
-
-    for (var a = 0 ; a < groupsObjects.length; a++){
-
-        if (group in groupsObjects[a]){
-            moviesNeeded = groupsObjects[a][group];
-        } 
-
-    };
-
-    console.log(moviesNeeded);
-    drawTable(moviesNeeded);
+    });
 
 };
