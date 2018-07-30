@@ -71,11 +71,15 @@ function groupCheck(gc,group){
         gc=true;
         $("#login-conf1").empty();
         $("#login-conf2").empty();
-        group = group.charAt(0).toUpperCase() + group.slice(1);
+        var groupArr = group.split('_')
+        var formattedStr = ''
+        for(let word of groupArr) {
+            formattedStr += word.charAt(0).toUpperCase() + word.slice(1) + ' ';
+        }
         $("#login-card").append($("<p>",{id:"login-conf1",text:"Group found"}));
         setTimeout(function() {
             $('#login-card').empty()
-            $("#login-card").append("You are now logged in to group:" + "<h2 class='group-name'>" + group + "</h2>")
+            $("#login-card").append("You are now logged in to group:" + "<h2 class='group-name'>" + formattedStr + "</h2>")
             $('.group-name').css('margin', '15px');
         }, 2000);    
         $("#group-input").val("Logged In");
@@ -331,7 +335,7 @@ $('#submit-btn').on("click",function(event){
     $("#already-there-note").remove();
 
     var group = $("#add-group-input").val();
-    group = group.replace(/\s/g, '').toLowerCase();
+    group = group.replace(/\s/g, '_').toLowerCase();
     
 
 // Capture zipcode
@@ -393,10 +397,8 @@ $("#login-btn").on("click",function(event){
     
     // GRoup should be captured
     var group = $("#group-input").val().trim();
-    group = group.replace(/\s/g, '');
-
     $("#group-input").val("");
-    group = group.replace(/\s/g, '').toLowerCase();
+    group = group.replace(/\s/g, '_').toLowerCase();
     //Check if Group already exists
     
 
