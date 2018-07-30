@@ -122,7 +122,8 @@ function generateMovies(data) {
                 "Title": data[xx].title,
                 "Run Time":moment.duration(data[xx].runTime).asMinutes(),
                 "Description":data[xx].shortDescription,                
-                "Rating":data[xx].ratings[0].code
+                "Rating":data[xx].ratings[0].code,
+                "Showtimes": data[xx].showtimes
                 
 
             });
@@ -325,8 +326,8 @@ $('#submit-btn').on("click",function(event){
     event.preventDefault();
     $("#already-there-note").remove();
 
-    group = $("#add-group-input").val();
-    group = group.replace(/\s/g, '');
+    var group = $("#add-group-input").val();
+    group = group.replace(/\s/g, '').toLowerCase();
     
 
 // Capture zipcode
@@ -387,8 +388,11 @@ $("#login-btn").on("click",function(event){
     $("#login-conf2").remove();
     
     // GRoup should be captured
-    group = $("#group-input").val().trim();
+    var group = $("#group-input").val().trim();
+    group = group.replace(/\s/g, '');
+
     $("#group-input").val("");
+    group = group.replace(/\s/g, '').toLowerCase();
     //Check if Group already exists
     
 
