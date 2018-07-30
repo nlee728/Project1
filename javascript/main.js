@@ -241,12 +241,13 @@ function createPoll(data, group){
   }
 
   class Movie {
-      constructor(title, runTime, shortDescription, Rating, choiceID){
+      constructor(title, runTime, shortDescription, Rating, choiceID, showtimes){
           this.title = title;
           this.runTime = runTime;
           this.shortDescription = shortDescription;
           this.Rating = Rating;
           this.choiceID = choiceID;
+          this.showtimes = showtimes;
       }
   }
   
@@ -472,7 +473,7 @@ $("#results-btn").on("click", function(){
         
         success: function (data) {
           console.log(JSON.stringify(data));
-          $("#graph-card").text("The Winner is " + data[0].choice.label);
+          $("#results").text("You chose " + data[0].choice.label);
         },
         error: function(){
           alert("Cannot get data");
