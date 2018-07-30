@@ -71,9 +71,13 @@ function groupCheck(gc,group){
         gc=true;
         $("#login-conf1").empty();
         $("#login-conf2").empty();
-        
+        group = group.charAt(0).toUpperCase() + group.slice(1);
         $("#login-card").append($("<p>",{id:"login-conf1",text:"Group found"}));
-        $("#login-card").append($("<p>",{id:"login-conf2",text:"You are now logged in!"}));
+        setTimeout(function() {
+            $('#login-card').empty()
+            $("#login-card").append("You are now logged in to group:" + "<h2 class='group-name'>" + group + "</h2>")
+            $('.group-name').css('margin', '15px');
+        }, 2000);    
         $("#group-input").val("Logged In");
         
         return gc;
