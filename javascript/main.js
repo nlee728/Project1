@@ -14,7 +14,7 @@ const config = {
 // Global variables
 var gc=false;
 var zc=false;
-var group='Default';
+var group='';
 var pollID = '';
 var groupsObjects=[];
 
@@ -297,8 +297,9 @@ $('#submit-btn').on("click",function(event){
     event.preventDefault();
     $("#already-there-note").remove();
 
-    var group = $("#add-group-input").val();
-    group = group.replace(/\s/g, '_').toLowerCase();
+    group = $("#add-group-input").val();
+    group = group.replace(/\s/g, '').toLowerCase();
+
     
     // Capture zipcode
     var zipcode = $("#zipcode-input").val();
@@ -345,8 +346,9 @@ $("#login-btn").on("click",function(event){
     $("#login-conf1").remove();
     $("#login-conf2").remove();
     
-    // Group should be captured
-    var group = $("#group-input").val().trim();
+    // GRoup should be captured
+    group = $("#group-input").val().trim();
+    group = group.replace(/\s/g, '');
     $("#group-input").val("");
     group = group.replace(/\s/g, '_').toLowerCase();
 
