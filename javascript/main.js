@@ -146,7 +146,7 @@ function drawTable(ObjectArray){
 
     $("#movie-table").append($("<th>",{text:"Your Vote",id:"tableHeader"+"Vote"}));
 
-    console.log(ObjectArray.length + "is the length of the movie array");
+    // console.log(ObjectArray.length + "is the length of the movie array");
 
     for (var xx=0; xx < Math.min(5,ObjectArray.length) ; xx++){
 
@@ -198,7 +198,7 @@ function callMovieAPI(zipcode, group){
     $.get(url).then(function(response) {
 
       var data = response;
-      console.log(data);
+    //   console.log(data);
       
       generateMovies(data);
       createPoll(data, group);
@@ -230,7 +230,7 @@ function createPoll(data, group){
             processData: false,
             data: JSON.stringify(pollObj),
             success: function (response) {
-                console.log(JSON.stringify(response));
+                // console.log(JSON.stringify(response));
                 var movies = database.ref("GroupsList/" + group + '/movies/');
                 var groupref = database.ref("GroupsList/" + group);
                 for (var xyz=0 ; xyz < 5 ; xyz ++){
@@ -308,7 +308,7 @@ function getMoviesforGroup(group){
         return snapshot.val()[key];
     });
 
-    console.log(movieArray);
+    // console.log(movieArray);
  
     drawTable(movieArray);
 
@@ -336,7 +336,7 @@ function getTimesforGroup(group){
 // EH Number 1
 // Whenever the groups in Firebase Changes - this updates a local copy so that people (and the JS program) know which groups are there
 database.ref("GroupsList").on("value", function(snapshot) {
-    console.log(snapshot.val());
+    // console.log(snapshot.val());
     groups = []; 
     
     for (key of Object.entries(snapshot.val())){
