@@ -19,7 +19,7 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
 
-    <!-- SS - adding Moment.js (using for logging the login (sorry, couldn't help that phrase)) -->
+    <!--Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     
     
@@ -69,8 +69,6 @@
                   <input class="form-control" id="add-group-input" placeholder="Enter your group name" type="text">
                   <label for="zipcode-input">Zipcode</label>
                   <input class="form-control" id="zipcode-input" placeholder="27713" type="text">
-                  <label for="password-input">Group Leader Password</label>
-                  <input class="form-control" id="password-input" placeholder="*******" type="text">
                 </div>
                 <button class="btn btn-primary float-right" id="submit-btn">Submit</button>
               </form>
@@ -126,21 +124,20 @@
         
       </div>
 
-      <!-- Movie Voting Results Graph -->
+      <!-- Movie Voting Results -->
       <div class="col-md-12">
-        <!-- Graph Card  -->
+        <!-- Results Card  -->
         <div class="card mb-4 p-4">
-          <div class="card-body" id="graph-card">
+          <div class="card-body" id="results-card">
             <h3 class="card-title">Your Voting Results</h3>
-            <h6 id="graph">Looks like nobody has voted for anything yet...</h6>
+            <h6 id="results">...</h6>
 
-            <!-- Graph with voting polls will be generated here -->
+            <!-- Winning movie will be populated here -->
 
           </div>
         </div>
       </div>
 
-    </div>
 
     <div class="row">
       <div class="col-md-12">
@@ -151,24 +148,14 @@
             <table class="table table-sm table-hover" id="showtimes-table" style="overflow-x:auto;">
               <thead>
                 <tr>
-                  <th scope="col">Theater Name</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Start Time</th>
-                  <th scope="col">Theater Website</th>
+                  <th scope="col">Theater</th>
+                  <th scope="col">Date & Time</th>
+                  <th scope="col">Your Vote</th>
                 </tr>
               </thead>
 
               <tbody>
-                <!-- Pre-populated samples -->
-                <!-- <tr>
-                  <th scope="col">AMC</th>
-                  <th scope="col">Some random location</th>
-                  <th scope="col">3:00am</th>
-                  <th scope="col">www.amc.com</th>
-                  <th scope="col"><input class="form-control" id="rank-input" placeholder="1-5" type="text"></th>
-                </tr> -->
-
-  
+               
                 <!-- Showtime info from APIs will go here -->
                 
               </tbody>
@@ -177,24 +164,17 @@
             <button class="btn btn-primary" id="results-btn">Get Voting Results!</button>
           </div>
         </div>
-        <div class="card-footer text-muted">
-          ©2018 Powered by TMS and Open Agora APIs
-        </div>
+       
       </div>
       
     </div>
+  </div>
+
+    <div class="card-footer text-muted">
+      ©2018 Powered by TMS and Open Agora APIs
+    </div>
 
 
-
-
-
-    
-    <!-- Added an extra tab for testing purpose against firebase - should finally point to John's (app.js)  -->
-    
-    
-    <!-- Javascript -->
-    <!-- <script src="../Project1/javascript/app2.js"></script> -->
-    
     <script src="../Project1/javascript/main.js"></script>
 
   </body>

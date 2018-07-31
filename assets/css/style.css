@@ -1,3 +1,4 @@
+/* Background image positioning */
 body {
     background: url("../images/Black-and-White-Cinema-Backgrounds.jpg") no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -7,6 +8,7 @@ body {
     text-align: center;
 }
 
+/* Pick A Flick logo styling */
 .logo {
     margin-top: 50px;
     font-family: 'Black Ops One', cursive;
