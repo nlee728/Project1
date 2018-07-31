@@ -98,7 +98,7 @@ function generateMovies(data) {
 
             moviesNeeded.push({
                 "Title": data[xx].title,
-                "Run Time":moment.duration(data[xx].runTime).asMinutes(),
+                "Run Time":parseRunTime(data[xx].runTime),
                 "Description":data[xx].shortDescription,                
                 "Rating":data[xx].ratings[0].code,
                 "Showtimes": data[xx].showtimes
@@ -495,4 +495,12 @@ function displayCurrentGroup(group) {
         $("#login-card").append("You are now logged in to group:" + "<h2 class='group-name'>" + formattedStr + "</h2>")
         $('.group-name').css('margin', '15px');
     }, 2000); 
+}
+
+//turn runTime format(ISO) to something readable
+function parseRunTime(runTime) {
+  var hours = parseInt(runTime.slice(3, runTime.length - 4));
+  var minutes = parseInt(runTime.slice(5, runTime.length - 1));
+  var formatedRunTime = (hours * 60) + minutes;
+  return formatedRunTime;
 }
