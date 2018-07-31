@@ -235,7 +235,7 @@ function createPoll(data, group){
   class Movie {
       constructor(title, runTime, shortDescription, Rating, choiceID, showtimes){
           this.title = title;
-          this.runTime = runTime;
+          this.runTime = parseRunTime(runTime);
           this.shortDescription = shortDescription;
           this.Rating = Rating;
           this.choiceID = choiceID;
