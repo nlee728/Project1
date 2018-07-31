@@ -736,7 +736,7 @@ function createTimesPoll(data){
     var choices = [];
 
     for(var i = 0; i < data.length; i++){
-        choices.push({label: data[i].theatre.name + ' at ' + data[i].dateTime});
+        choices.push({label: data[i].theatre.name + ' at ' + moment(data[i].dateTime).format("HH:mm A")});
     }
 
     var pollObj = {"title": group, choices: choices};                                 
