@@ -46,7 +46,7 @@ label {
     background-color: lightgray;
 }
 
-#card-body { 
+.card-body { 
     overflow-x: scroll !important;
 }
 
