@@ -16,6 +16,10 @@ var gc=false;
 var zc=false;
 var group='';
 var pollID = '';
+var ontimes = '';
+var allResults = '';
+var winner = '';
+var timeWinner = '';
 var groupsObjects=[];
 
 // FUNCTIONS "hoisted" here
@@ -103,12 +107,19 @@ function generateMovies(data) {
             if (!(data[xx].shortDescription)) {
                 data[xx]["shortDescription"] = " Unavailable";
             };
+            var Rating;
+            if('ratings' in data[xx]){
+                Rating = data[xx].ratings[0].code;
+            }
+            else{
+                Rating = 'NA';
+            }
 
             moviesNeeded.push({
-                "Title": data[xx].title,
-                "Run Time":moment.duration(data[xx].runTime).asMinutes(),
-                "Description":data[xx].shortDescription,                
-                "Rating":data[xx].ratings[0].code,
+                "title": data[xx].title,
+                "runTime":moment.duration(data[xx].runTime).asMinutes(),
+                "shortDescription":data[xx].shortDescription,                
+                "Rating":Rating,
                 "Showtimes": data[xx].showtimes
                 
             });
@@ -117,9 +128,9 @@ function generateMovies(data) {
 
     };
 
-    database.ref("GroupsList/"+group+"/movies/").set(moviesNeeded);
+    //database.ref("GroupsList/"+group+"/movies/").set(moviesNeeded);
 
-    drawTable(moviesNeeded);
+    // drawTable(moviesNeeded);
 
   };
 
@@ -129,32 +140,45 @@ function drawTable(ObjectArray){
 
     $("#movie-table").empty();
 
+    $("#movie-table").append($("<th>",{text:'Title',id:"tableHeaderTitle"}))
+                     .append($("<th>",{text:'Rating',id:"tableHeaderRating"}))
+                     .append($("<th>",{text:'Description',id:"tableHeaderDescription"}))
+                     .append($("<th>",{text:'Runtime',id:"tableHeaderRuntime"}));
+
+    $("#movie-table").append($("<th>",{text:"Your Vote",id:"tableHeader"+"Vote"}));
+
     console.log(ObjectArray.length + "is the length of the movie array");
 
-    for (var xx=0; xx < Math.min(5,ObjectArray.length-1) ; xx++){
+    for (var xx=0; xx < Math.min(5,ObjectArray.length) ; xx++){
 
-        if (xx === 0){
+        $("#movie-table").append($("<tr>",{id:"trow"+xx, class: 'movierow'}));
+        $("#trow"+xx).append($("<td>",{id:"tableBody"+xx+'Title', text: ObjectArray[xx].title}))
+                     .append($("<td>",{id:"tableBody"+xx+'Rating', text: ObjectArray[xx].Rating}))
+                     .append($("<td>",{id:"tableBody"+xx+'Description', text: ObjectArray[xx].shortDescription}))
+                     .append($("<td>",{id:"tableBody"+xx+'Runtime', text: ObjectArray[xx].runTime}));
+
+        // if (xx === 0){
             
-            for ([key, value] of Object.entries(ObjectArray[xx])) {
-                $("#movie-table").append($("<th>",{text:key,id:"tableHeader"+key.replace(/ +/g,"")}));
+        //     for ([key, value] of Object.entries(ObjectArray[xx])) {
+        //         $("#movie-table").append($("<th>",{text:key,id:"tableHeader"+key.replace(/ +/g,"")}));
                                
-                } ;  
-            $("#movie-table").append($("<th>",{text:"Your Vote",id:"tableHeader"+"Vote"}));
+        //         } ;  
+        //     $("#movie-table").append($("<th>",{text:"Your Vote",id:"tableHeader"+"Vote"}));
 
-        };
+        // };
 
-        $("#movie-table").append($("<tr>",{id:"trow"+xx}));
+        // $("#movie-table").append($("<tr>",{id:"trow"+xx}));
 
-        for ([key, value] of Object.entries(ObjectArray[xx])) {
+        // for ([key, value] of Object.entries(ObjectArray[xx])) {
             
-            newkey=key.replace(/ +/g,"");
-            $("#trow"+xx).append($("<td>",{id:"tableBody"+xx+newkey}));
-            $("#tableBody"+xx+newkey).append(value);
+        //     newkey=key.replace(/ +/g,"");
+        //     $("#trow"+xx).append($("<td>",{id:"tableBody"+xx+newkey}));
+        //     $("#tableBody"+xx+newkey).append(value);
                     
-        };
+        // };
 
         $("#trow"+xx).append($("<td>",{id:"tableBody"+xx+"Vote"}));
-        $("#tableBody"+xx+"Vote").append($("<input>",{class:"form-control",type:"number",id:"vote-form"+xx}));
+        $("#tableBody"+xx+"Vote").append($("<input>",{class:"form-control",type:"number",id:"vote-form"+xx, choiceID: ObjectArray[xx].choiceID}));
         $("#movie-table").css({"text-align":"left"});
 
     };
@@ -175,6 +199,7 @@ function callMovieAPI(zipcode, group){
     $.get(url).then(function(response) {
 
       var data = response;
+      console.log(data);
       
       generateMovies(data);
       createPoll(data, group);
@@ -218,21 +243,43 @@ function createPoll(data, group){
                 };
                 pollID = response.id;
 
-                var moviesObj = {pollID: response.id,
-                                movie0: new Movie(data[0].title, data[0].runTime, data[0].shortDescription, data[0].ratings[0].code, response.choices[0].id, data[0].showtimes),
-                                movie1: new Movie(data[1].title, data[1].runTime, data[1].shortDescription, data[1].ratings[0].code, response.choices[1].id, data[1].showtimes),
-                                movie2: new Movie(data[2].title, data[2].runTime, data[2].shortDescription, data[2].ratings[0].code, response.choices[2].id, data[2].showtimes),
-                                movie3: new Movie(data[3].title, data[3].runTime, data[3].shortDescription, data[3].ratings[0].code, response.choices[3].id, data[3].showtimes),
-                                movie4: new Movie(data[4].title, data[4].runTime, data[4].shortDescription, data[4].ratings[0].code, response.choices[4].id, data[4].showtimes)
-                                }
+                groupref.update({pollID: response.id});
+
+                
+                var moviesObj = {};
+                for(var i = 0; i<5; i++){
+                    var Rating;
+                    if('ratings' in data[i]){
+                        Rating = data[i].ratings[0].code;
+                    }
+                    else{
+                        Rating = 'NA';
+                    }
+
+                    var runTime;
+                    if('runTime' in data[i]){
+                        runTime = moment.duration(data[i].runTime).asMinutes();
+                    }
+                    else{
+                        runTime = 'NA';
+                    }
+
+                    moviesObj['movie' + i]= new Movie(data[i].title, runTime, data[i].shortDescription, Rating, response.choices[i].id, data[i].showtimes);
+                }
 
                 movies.set(moviesObj);
 
-                $("#vote-form0").attr("choiceID", response.choices[0].id);
-                $("#vote-form1").attr("choiceID", response.choices[1].id);
-                $("#vote-form2").attr("choiceID", response.choices[2].id);
-                $("#vote-form3").attr("choiceID", response.choices[3].id);
-                $("#vote-form4").attr("choiceID", response.choices[4].id);
+                // $("#vote-form0").attr("choiceID", response.choices[0].id);
+                // $("#vote-form1").attr("choiceID", response.choices[1].id);
+                // $("#vote-form2").attr("choiceID", response.choices[2].id);
+                // $("#vote-form3").attr("choiceID", response.choices[3].id);
+                // $("#vote-form4").attr("choiceID", response.choices[4].id);
+
+                var movieArray = Object.keys(moviesObj).map(function(key) {
+                    return moviesObj[key];
+                });
+             
+                drawTable(movieArray);
             },
             error: function(){
             alert("Cannot get data");
@@ -258,12 +305,28 @@ function getMoviesforGroup(group){
     var groupreference =  database.ref("GroupsList/" + group + "/movies/");
     groupreference.on("value", function(snapshot){
     
-    pollID = snapshot.val().pollID;
     var movieArray = Object.keys(snapshot.val()).map(function(key) {
+        return snapshot.val()[key];
+    });
+
+    console.log(movieArray);
+ 
+    drawTable(movieArray);
+
+    });
+
+};
+
+function getTimesforGroup(group){
+
+    var groupreference =  database.ref("GroupsList/" + group + "/times/");
+    groupreference.on("value", function(snapshot){
+    
+    var timesArray = Object.keys(snapshot.val()).map(function(key) {
         return snapshot.val()[key];
       });
  
-    drawTable(movieArray);
+    drawTimesTable(timesArray);
 
     });
 
@@ -313,7 +376,10 @@ $('#submit-btn').on("click",function(event){
     if (zc=== true){
         
         if( groups.indexOf(group) === -1) {
-            groupArray={"groupName":group,"zipcode":zipcode};
+            groupArray={"groupName":group,"zipcode":zipcode, ontimes: 'no', allResults: 'no',
+                        winner: '', timeWinner: ''};
+            ontimes = 'no';
+            allResults = 'no';
 
             var ref = database.ref("GroupsList/" + group);
             ref.set(groupArray);
@@ -358,7 +424,28 @@ $("#login-btn").on("click",function(event){
     if (gc === false) { 
         gc=groupCheck(gc,group);
 
-        getMoviesforGroup(group);
+        var ref = database.ref("GroupsList/" + group );
+
+        ref.on("value", function(snapshot){
+            pollID = snapshot.val().pollID;
+            ontimes = snapshot.val().ontimes;
+            allResults = snapshot.val().allResults;
+            winner = snapshot.val().winner;
+            timeWinner = snapshot.val().timeWinner;
+        });
+
+        if(ontimes === 'no'){
+            getMoviesforGroup(group);
+        }
+        else if(allResults === 'no'){
+            $("#results").append($('<p>').text("You chose " + winner));
+            getTimesforGroup(group);
+        }
+        else{
+            $("#results").append($('<p>').text("You chose " + winner));
+            $("#results").append($('<p>').text("At " + timeWinner));
+        }
+
 
        };
 
@@ -379,12 +466,11 @@ $("#vote-btn").on("click", function(){
 
     $("#not-vote-msg").remove();
 
-    console.log($('.trr').length);
+    console.log($('.movierow').length);
 
     for (var i = 0 ; i < 5 ; i ++) {
         var Votes = {};
-        Votes["choice_id"] = $("#tableBody" + i + "choiceID").text();
-        console.log($("#tableBody" + i + "choiceID").text());
+        Votes["choice_id"] = $("#vote-form"+i).attr("choiceID");
         Votes["rank"] = parseInt($("#vote-form"+i).val());
         VotesArray.push(Votes);
      
@@ -453,13 +539,90 @@ $("#vote-btn").on("click", function(){
 
 });
 
+$("#vote-btn2").on("click", function(){
+
+    var VotesArray=[];
+
+    $("#not-vote-msg").remove();
+
+    console.log($('.timerow').length);
+
+    for (var i = 0 ; i < $('.timerow').length ; i ++) {
+        var Votes = {};
+        Votes["choice_id"] = $("#vote-form-time"+i).attr("choiceID");
+        Votes["rank"] = parseInt($("#vote-form-time"+i).val());
+        VotesArray.push(Votes);
+     
+    };
+
+    console.log("Votes Array: " + JSON.stringify(VotesArray));
+
+    //validation function
+    if(testVote(VotesArray)){
+
+        var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/votes/for-poll/" + pollID + "?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO";
+    
+        var headers = {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+        };
+
+        console.log("Votes Array: " + JSON.stringify(VotesArray));
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+    
+            dataType: 'json',
+            headers: headers,
+    
+            processData: false,
+            data: JSON.stringify(VotesArray),
+            success: function (data) {
+                console.log(JSON.stringify(data));
+            },
+            error: function(){
+            alert("Cannot get data");
+            }
+        });
+    }
+
+
+    function testVote(vote){
+        var testArray = [];
+        for(var i = 0; i<vote.length; i++){
+            rank = parseInt(vote[i].rank);
+            if(rank <= vote.length && rank>0){
+                testArray[rank-1] = parseInt(rank);
+            }
+
+        }
+        for(var i = 0; i<vote.length; i++){
+            if(testArray[i] != i+1){
+                return false;
+            }
+        }
+        return true;
+     };
+
+
+    vc = testVote(VotesArray);
+
+    if (vc === false) {
+
+        $("vote-card").append($("<p>",{id:"not-vote-msg",text:"Voting not in order - please check"}));
+
+
+    };
+});
+
 // EH Number 5
 //when submit all votes is clicked 
 $("#results-btn").on("click", function(){
 
     console.log(pollID);
 
-    var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/" + pollID + "/results/condorcet?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO"
+    var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/" + pollID + "/results/condorcet?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO";
 
     var headers = {
              'Accept': 'application/json',
@@ -475,7 +638,32 @@ $("#results-btn").on("click", function(){
         
         success: function (data) {
           console.log(JSON.stringify(data));
-          $("#results").text("You chose " + data[0].choice.label);
+          $("#results").append($('<p>').text("You chose " + data[0].choice.label));
+
+          var groupref = database.ref("GroupsList/" + group);
+          groupref.update({winner: data[0].choice.label});
+
+          var moviereference =  database.ref("GroupsList/" + group + "/movies/");
+            moviereference.on("value", function(snapshot){
+            
+            var movieArray = Object.keys(snapshot.val()).map(function(key) {
+                return snapshot.val()[key];
+            });
+
+            for(var i = 0; i<5; i++){
+                if(movieArray[i].choiceID === data[0].choice.id){
+                    
+                    var timesArray = Object.keys(movieArray[i].showtimes).map(function(key) {
+                        return movieArray[i].showtimes[key];
+                    });
+
+                    createTimesPoll(timesArray);
+                    
+                }
+            }
+        });
+
+
         },
         error: function(){
           alert("Cannot get data");
@@ -483,6 +671,122 @@ $("#results-btn").on("click", function(){
     });
    
 });
+
+$("#results-btn2").on("click", function(){
+
+    console.log(pollID);
+
+    var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/" + pollID + "/results/condorcet?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO";
+
+    var headers = {
+             'Accept': 'application/json',
+             'Content-type': 'application/json'
+     };
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+
+        
+        headers: headers,
+        
+        success: function (data) {
+            console.log(JSON.stringify(data));
+            $("#results").append($("<p>").text("At " + data[0].choice.label));
+
+            var groupref = database.ref("GroupsList/" + group);
+            groupref.update({timeWinner: data[0].choice.label});
+            groupref.update({allResults: 'yes'});
+        },
+        error: function(){
+          alert("Cannot get data");
+        }
+    });
+   
+});
+
+
+function drawTimesTable(timesArray){
+    
+    for (var xx=0; xx < Math.min(3,timesArray.length) ; xx++){
+        
+
+        $("#showtimes-table").append($("<tr>",{id:"trowtimes"+xx, class: "timerow"}));
+        $("#trowtimes"+xx).append($("<td>",{id:"timesBody"+xx+'Title', text: timesArray[xx].theatre}))
+                    .append($("<td>",{id:"timesBody"+xx+'Rating', text: timesArray[xx].dateTime}));
+        
+
+        $("#trowtimes"+xx).append($("<td>",{id:"timesBody"+xx+"Vote"}));
+        $("#timesBody"+xx+"Vote").append($("<input>",{class:"form-control",type:"number",id:"vote-form-time"+xx, choiceID: timesArray[xx].choiceID}));
+        $("#showtimes-table").css({"text-align":"left"});
+            
+    }
+}
+
+function createTimesPoll(data){
+
+    var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/with-choices?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO"
+
+    var headers = {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+    };
+
+    var choices = [];
+
+    for(var i = 0; i < data.length; i++){
+        choices.push({label: data[i].theatre.name + ' at ' + data[0].dateTime});
+    }
+
+    var pollObj = {"title": group, choices: choices};                                 
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+
+        dataType: 'json',
+        headers: headers,
+        
+        processData: false,
+        data: JSON.stringify(pollObj),
+        success: function (response) {
+            console.log(JSON.stringify(response));
+            var times = database.ref("GroupsList/" + group + '/times/');
+            var groupref = database.ref("GroupsList/" + group);
+            
+            pollID = response.id;
+            groupref.update({pollID: response.id});
+            groupref.update({ontimes: 'yes'});
+            ontimes = 'yes';
+
+            var timesObj = {};
+
+            for(var i = 0; i < data.length; i++){
+                timesObj['time' + i] = new Time(theatre = data[i].theatre.name, dateTime = data[i].dateTime, choiceID = response.choices[i].id);
+            }
+
+            times.set(timesObj);
+
+            var timesArray = Object.keys(timesObj).map(function(key) {
+                return timesObj[key];
+            });
+         
+            drawTimesTable(timesArray);
+        },
+        error: function(){
+        alert("Cannot get data");
+        }
+    });
+}
+
+class Time {
+  constructor(theatre, dateTime, choiceID){
+      this.theatre = theatre;
+      this.dateTime = dateTime;
+      this.choiceID = choiceID;
+      
+  }
+}
 
 // TEST EH Number 6 
 // Pull snapshot of movies 
