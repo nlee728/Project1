@@ -42,7 +42,7 @@ label {
     margin-right: 10px;
 }
 
-#results-btn {
+#results-btn, #results-btn2 {
     background-color: lightgray;
 }
 
