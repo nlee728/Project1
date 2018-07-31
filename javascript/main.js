@@ -501,6 +501,6 @@ function displayCurrentGroup(group) {
 function parseRunTime(runTime) {
   var hours = parseInt(runTime.slice(3, runTime.length - 4));
   var minutes = parseInt(runTime.slice(5, runTime.length - 1));
-  var formatedRunTime = (hours * 60) + minutes + 'min';
+  var formatedRunTime = (hours * 60) + minutes;
   return formatedRunTime;
 }
