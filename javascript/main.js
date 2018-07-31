@@ -210,7 +210,7 @@ function callMovieAPI(zipcode, group){
 //calls the voting API to assign choiceID values to the movies
 function createPoll(data, group){
 
-        var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/with-choices?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO"
+        var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/with-choices?api_token=w65gKtv1JRY8Xh65i6PqmHE5pOpETFyi"
 
         var headers = {
                 'Accept': 'application/json',
@@ -289,7 +289,7 @@ function createPoll(data, group){
   class Movie {
       constructor(title, runTime, shortDescription, Rating, choiceID, showtimes){
           this.title = title;
-          this.runTime = parseRunTime(runTime);
+          this.runTime = runTime;
           this.shortDescription = shortDescription;
           this.Rating = Rating;
           this.choiceID = choiceID;
@@ -433,14 +433,18 @@ $("#login-btn").on("click",function(event){
 
         if(ontimes === 'no'){
             getMoviesforGroup(group);
+
         }
         else if(allResults === 'no'){
             $("#results").append($('<p>').text("You chose " + winner));
             getTimesforGroup(group);
+            $("#card-body1").remove();
         }
         else{
             $("#results").append($('<p>').text("You chose " + winner));
             $("#results").append($('<p>').text("At " + timeWinner));
+            $("#card-body1").remove();
+            $("#card-body2").remove();
         }
 
 
@@ -463,7 +467,7 @@ $("#vote-btn").on("click", function(){
 
     $("#not-vote-msg").remove();
 
-    console.log($('.movierow').length);
+    // console.log($('.movierow').length);
 
     for (var i = 0 ; i < 5 ; i ++) {
         var Votes = {};
@@ -473,19 +477,19 @@ $("#vote-btn").on("click", function(){
      
     };
 
-    console.log("Votes Array: " + JSON.stringify(VotesArray));
+    // console.log("Votes Array: " + JSON.stringify(VotesArray));
 
     //validation function
     if(testVote(VotesArray)){
 
-        var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/votes/for-poll/" + pollID + "?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO";
+        var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/votes/for-poll/" + pollID + "?api_token=w65gKtv1JRY8Xh65i6PqmHE5pOpETFyi";
     
         var headers = {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
         };
 
-        console.log("Votes Array: " + JSON.stringify(VotesArray));
+        // console.log("Votes Array: " + JSON.stringify(VotesArray));
 
         $.ajax({
             url: url,
@@ -497,7 +501,7 @@ $("#vote-btn").on("click", function(){
             processData: false,
             data: JSON.stringify(VotesArray),
             success: function (data) {
-                console.log(JSON.stringify(data));
+                // console.log(JSON.stringify(data));
             },
             error: function(){
             alert("Cannot get data");
@@ -542,7 +546,7 @@ $("#vote-btn2").on("click", function(){
 
     $("#not-vote-msg").remove();
 
-    console.log($('.timerow').length);
+    // console.log($('.timerow').length);
 
     for (var i = 0 ; i < $('.timerow').length ; i ++) {
         var Votes = {};
@@ -552,19 +556,19 @@ $("#vote-btn2").on("click", function(){
      
     };
 
-    console.log("Votes Array: " + JSON.stringify(VotesArray));
+    // console.log("Votes Array: " + JSON.stringify(VotesArray));
 
     //validation function
     if(testVote(VotesArray)){
 
-        var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/votes/for-poll/" + pollID + "?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO";
+        var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/votes/for-poll/" + pollID + "?api_token=w65gKtv1JRY8Xh65i6PqmHE5pOpETFyi";
     
         var headers = {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
         };
 
-        console.log("Votes Array: " + JSON.stringify(VotesArray));
+        // console.log("Votes Array: " + JSON.stringify(VotesArray));
 
         $.ajax({
             url: url,
@@ -617,9 +621,9 @@ $("#vote-btn2").on("click", function(){
 //when submit all votes is clicked 
 $("#results-btn").on("click", function(){
 
-    console.log(pollID);
+    // console.log(pollID);
 
-    var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/" + pollID + "/results/condorcet?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO";
+    var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/" + pollID + "/results/condorcet?api_token=w65gKtv1JRY8Xh65i6PqmHE5pOpETFyi";
 
     var headers = {
              'Accept': 'application/json',
@@ -634,7 +638,7 @@ $("#results-btn").on("click", function(){
         headers: headers,
         
         success: function (data) {
-          console.log(JSON.stringify(data));
+        //   console.log(JSON.stringify(data));
           $("#results").append($('<p>').text("You chose " + data[0].choice.label));
 
           var groupref = database.ref("GroupsList/" + group);
@@ -671,9 +675,9 @@ $("#results-btn").on("click", function(){
 
 $("#results-btn2").on("click", function(){
 
-    console.log(pollID);
+    // console.log(pollID);
 
-    var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/" + pollID + "/results/condorcet?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO";
+    var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/" + pollID + "/results/condorcet?api_token=w65gKtv1JRY8Xh65i6PqmHE5pOpETFyi";
 
     var headers = {
              'Accept': 'application/json',
@@ -722,7 +726,7 @@ function drawTimesTable(timesArray){
 
 function createTimesPoll(data){
 
-    var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/with-choices?api_token=ftYSoK8x1D5R9n0XMn5TAEdAzxeiaLZO"
+    var url = "https://cors-anywhere.herokuapp.com/https://api.open-agora.com/polls/with-choices?api_token=w65gKtv1JRY8Xh65i6PqmHE5pOpETFyi"
 
     var headers = {
             'Accept': 'application/json',
@@ -732,7 +736,7 @@ function createTimesPoll(data){
     var choices = [];
 
     for(var i = 0; i < data.length; i++){
-        choices.push({label: data[i].theatre.name + ' at ' + data[0].dateTime});
+        choices.push({label: data[i].theatre.name + ' at ' + data[i].dateTime});
     }
 
     var pollObj = {"title": group, choices: choices};                                 
@@ -747,7 +751,7 @@ function createTimesPoll(data){
         processData: false,
         data: JSON.stringify(pollObj),
         success: function (response) {
-            console.log(JSON.stringify(response));
+            // console.log(JSON.stringify(response));
             var times = database.ref("GroupsList/" + group + '/times/');
             var groupref = database.ref("GroupsList/" + group);
             
@@ -779,7 +783,7 @@ function createTimesPoll(data){
 class Time {
   constructor(theatre, dateTime, choiceID){
       this.theatre = theatre;
-      this.dateTime = dateTime;
+      this.dateTime = moment(dateTime).format('HH:mm A');
       this.choiceID = choiceID;
       
   }
@@ -809,9 +813,9 @@ function displayCurrentGroup(group) {
 }
 
 //turn runTime format(ISO) to something readable
-function parseRunTime(runTime) {
-  var hours = parseInt(runTime.slice(3, runTime.length - 4));
-  var minutes = parseInt(runTime.slice(5, runTime.length - 1));
-  var formatedRunTime = (hours * 60) + minutes;
-  return formatedRunTime;
-}
+// function parseRunTime(runTime) {
+//   var hours = parseInt(runTime.slice(3, runTime.length - 4));
+//   var minutes = parseInt(runTime.slice(5, runTime.length - 1));
+//   var formatedRunTime = (hours * 60) + minutes;
+//   return formatedRunTime;
+// }
