@@ -290,7 +290,7 @@ $('#submit-btn').on("click",function(event){
     $("#already-there-note").remove();
 
     group = $("#add-group-input").val();
-    group = group.replace(/\s/g, '').toLowerCase();
+    group = group.replace(/\s/g, '_').toLowerCase();
     
     // Capture zipcode
     var zipcode = $("#zipcode-input").val();
