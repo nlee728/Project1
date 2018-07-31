@@ -66,17 +66,9 @@ function groupCheck(gc,group){
         gc=true;
         $("#login-conf1").empty();
         $("#login-conf2").empty();
-        var groupArr = group.split('_')
-        var formattedStr = ''
-        for(let word of groupArr) {
-            formattedStr += word.charAt(0).toUpperCase() + word.slice(1) + ' ';
-        }
+    
         $("#login-card").append($("<p>",{id:"login-conf1",text:"Group found"}));
-        setTimeout(function() {
-            $('#login-card').empty()
-            $("#login-card").append("You are now logged in to group:" + "<h2 class='group-name'>" + formattedStr + "</h2>")
-            $('.group-name').css('margin', '15px');
-        }, 2000);    
+        displayCurrentGroup(group);   
         $("#group-input").val("Logged In");
         
         return gc;
@@ -116,10 +108,17 @@ function generateMovies(data) {
             }
 
             moviesNeeded.push({
+
                 "title": data[xx].title,
                 "runTime":moment.duration(data[xx].runTime).asMinutes(),
                 "shortDescription":data[xx].shortDescription,                
                 "Rating":Rating,
+
+//                 "Title": data[xx].title,
+//                 "Run Time":parseRunTime(data[xx].runTime),
+//                 "Description":data[xx].shortDescription,                
+//                 "Rating":data[xx].ratings[0].code,
+
                 "Showtimes": data[xx].showtimes
                 
             });
@@ -290,7 +289,7 @@ function createPoll(data, group){
   class Movie {
       constructor(title, runTime, shortDescription, Rating, choiceID, showtimes){
           this.title = title;
-          this.runTime = runTime;
+          this.runTime = parseRunTime(runTime);
           this.shortDescription = shortDescription;
           this.Rating = Rating;
           this.choiceID = choiceID;
@@ -361,8 +360,7 @@ $('#submit-btn').on("click",function(event){
     $("#already-there-note").remove();
 
     group = $("#add-group-input").val();
-    group = group.replace(/\s/g, '').toLowerCase();
-
+    group = group.replace(/\s/g, '_').toLowerCase();
     
     // Capture zipcode
     var zipcode = $("#zipcode-input").val();
@@ -387,7 +385,7 @@ $('#submit-btn').on("click",function(event){
             $("#group-card").append($("<p>",{id:"already-there-note",text:"New group added"}));
             $("#group-input").val(group);
             $("#submit-button").text("Add another Group ");
-
+            displayCurrentGroup(group);
             //calling the Movie API
             callMovieAPI(zipcode, group);
 
@@ -414,7 +412,6 @@ $("#login-btn").on("click",function(event){
     
     // GRoup should be captured
     group = $("#group-input").val().trim();
-    group = group.replace(/\s/g, '');
     $("#group-input").val("");
     group = group.replace(/\s/g, '_').toLowerCase();
 
@@ -797,3 +794,24 @@ class Time {
 // console.log(snapshot.val());
 
 // });
+
+function displayCurrentGroup(group) {
+    var groupArr = group.split('_')
+    var formattedStr = ''
+    for(let word of groupArr) {
+        formattedStr += word.charAt(0).toUpperCase() + word.slice(1) + ' ';
+    }
+    setTimeout(function() {
+        $('#login-card').empty()
+        $("#login-card").append("You are now logged in to group:" + "<h2 class='group-name'>" + formattedStr + "</h2>")
+        $('.group-name').css('margin', '15px');
+    }, 2000); 
+}
+
+//turn runTime format(ISO) to something readable
+function parseRunTime(runTime) {
+  var hours = parseInt(runTime.slice(3, runTime.length - 4));
+  var minutes = parseInt(runTime.slice(5, runTime.length - 1));
+  var formatedRunTime = (hours * 60) + minutes;
+  return formatedRunTime;
+}
