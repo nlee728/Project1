@@ -18,7 +18,7 @@ const config = {
 var gc=false;
 var zc=false;
 // I really dont think this is neeeded , but playing it safe for now
-var group='Default';
+var group='';
 var groupsObjects=[];
 
 // Functions "hoisted" here
@@ -326,7 +326,7 @@ $('#submit-btn').on("click",function(event){
     event.preventDefault();
     $("#already-there-note").remove();
 
-    var group = $("#add-group-input").val();
+    group = $("#add-group-input").val();
     group = group.replace(/\s/g, '').toLowerCase();
 
     
@@ -389,7 +389,7 @@ $("#login-btn").on("click",function(event){
     $("#login-conf2").remove();
     
     // GRoup should be captured
-    var group = $("#group-input").val().trim();
+    group = $("#group-input").val().trim();
     group = group.replace(/\s/g, '');
     $("#group-input").val("");
     group = group.replace(/\s/g, '').toLowerCase();
