@@ -190,7 +190,7 @@ function callMovieAPI(zipcode, group){
 
     var startDate = moment().format("YYYY-MM-DD");
     var api_key = 'seehjrjvumeesg8pe3e87j9j';
-    var url = 'http://data.tmsapi.com/v1.1/movies/showings?' +
+    var url = 'https://data.tmsapi.com/v1.1/movies/showings?' +
           'startDate=' + startDate +
           '&zip=' + zipcode +
           '&api_key=' + api_key;
